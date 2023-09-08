@@ -51,12 +51,27 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(max_length=254, unique=True)
-    username = models.CharField(max_length=254, null=True, blank=True)
+    DEPARTMENT_CHOICES = [
+        ('RBR', 'Roads and bridges'),
+        ('SWS', 'Sewer and waterworks'),
+        ('POW', 'Power supply'),
+        ('GAS', 'Gasworks'),
+        ('TEL', 'Telecommunication'),
+        ('GAR', 'Garbage disposal'),
+        ('CTR', 'City transport'),
+        ('HTH', 'Healthcare'),
+        ('EDU', 'Education'),
+        ('SAF', 'Public safety')
+    ]
+    email = models.EmailField(max_length=100, unique=True)
+    username = models.CharField(max_length=100, null=True, blank=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
-    department = models.CharField(max_length=254, null=True, blank=True)
+    department = models.CharField(
+        max_length=100,
+        choices=DEPARTMENT_CHOICES
+        )
     date_joined = models.DateTimeField(auto_now_add=True)
 
     USERNAME_FIELD = 'email'
