@@ -5,7 +5,7 @@ from django.utils import timezone
 
 class UserManager(BaseUserManager):
 
-    def _create_user(self, email, username, password, is_staff, is_superuser, department, **extra_fields):
+    def _create_user(self, email, username, password, is_staff, is_superuser, **extra_fields):
         if not email:
             raise ValueError('Users must have an email address')
         if not username:
@@ -15,11 +15,10 @@ class UserManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.model(
             email=email,
-            username = username,
+            username=username,
             is_staff=is_staff,
             is_active=True,
             is_superuser=is_superuser,
-            department=department,
             date_joined=now,
             **extra_fields
         )
@@ -32,10 +31,11 @@ class UserManager(BaseUserManager):
             email,
             username,
             password,
+            is_staff=False,
+            is_superuser=False,
             **extra_fields
         )
-        user.is_staff = False
-        user.is_superuser = False
+
         return user
 
     def create_superuser(self, email, username, password, **extra_fields):
@@ -43,15 +43,19 @@ class UserManager(BaseUserManager):
             email,
             username,
             password,
+            is_staff=True,
+            is_superuser=True,
+            department='SYS',
             **extra_fields
         )
-        user.is_staff = True
-        user.is_superuser = True
+
         return user
 
 
 class User(AbstractBaseUser, PermissionsMixin):
     DEPARTMENT_CHOICES = [
+        ('APP', 'Applicant'),
+        ('SYS', 'System supervisor'),
         ('RBR', 'Roads and bridges'),
         ('SWS', 'Sewer and waterworks'),
         ('POW', 'Power supply'),
@@ -70,16 +74,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     department = models.CharField(
         max_length=100,
-        choices=DEPARTMENT_CHOICES
-        )
+        choices=DEPARTMENT_CHOICES, default='APP'
+    )
     date_joined = models.DateTimeField(auto_now_add=True)
 
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = ['username',]
 
     objects = UserManager()
 
-
     def __str__(self) -> str:
-        return f'{self.username}'
+        return f'{self.email}'
