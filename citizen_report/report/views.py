@@ -8,10 +8,10 @@ def home(request):
     return render(request, 'home.html')
 
 
-def reports(request):
+def show_reports(request):
     userReports = Report.objects.filter(user=request.user)
-    current = Report.objects.filter(user=request.user, completeDate__isnull=True)
-    return render(request, 'reports.html', {'current': current, 'userReports': userReports)
+    current = Report.objects.filter(user=request.user, created_at__isnull=True)
+    return render(request, 'reports.html', {'current': current, 'userReports': userReports})
 
 
 def create(request):
