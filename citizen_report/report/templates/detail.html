@@ -1,10 +1,26 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <title>detail</title>
-</head>
-<body>
-detail
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}
+Strona ze szczegółami
+{% endblock title %}
+
+{% block content %}
+
+<h3>Details page.</h3>
+
+<h4>{{report.title}}</h4>
+<a>{{report.text}}</a>
+<p>{{report.created_at}}</p>
+<p>{{report.updated_at}}</p>
+<p>{{report.image}}</p>
+<p>{{report.get_category_display}}</p>
+<p>{{report.get_status_display}}</p>
+<p>{{report.user}}</p>
+<p>{{report.clerk}}</p>
+
+{% if report.image %}}
+<img src="{{report.image.url}}" alt="Post image">
+{% endif %}
+
+
+{% endblock content %}
