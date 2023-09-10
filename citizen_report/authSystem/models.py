@@ -9,7 +9,7 @@ class UserManager(BaseUserManager):
         if not email:
             raise ValueError('Users must have an email address')
         if not username:
-            raise ValueError('Users must have an email address')
+            raise ValueError('Users must have an username')
 
         now = timezone.now()
         email = self.normalize_email(email)

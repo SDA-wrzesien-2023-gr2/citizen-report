@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Custom User Model</title>
+</head>
+<body>
+  {% if user.is_authenticated %}
+  Welcome, {{ user.email }}!
+  <p><a href="{% url 'logout' %}">Log Out</a></p>
+    {% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">Log In</a> |
+  <a href="{% url 'signup' %}">Sign Up</a>
+    {% endif %}
+
+  {% block content %}
+  {% endblock %}
+</body>
+</html>
