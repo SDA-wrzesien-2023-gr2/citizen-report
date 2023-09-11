@@ -4,22 +4,20 @@ from .models import Report
 from .forms import ReportForm
 
 
-# Create your views here.
-
 def home(request):
     return render(request, 'home.html')
 
 
 def show_reports(request):
-    userReports = Report.objects.filter(user=request.user)
+    user_reports = Report.objects.filter(user=request.user)
     current = Report.objects.filter(user=request.user, created_at__isnull=True)
-    return render(request, 'reports.html', {'current': current, 'userReports': userReports})
+    return render(request, 'reports.html', {'current': current, 'user_reports': user_reports})
 
 
 def create(request):
     if request.method == 'GET':
         return render(request, 'create.html', {'form': ReportForm()})
-    else:  # POST
+    elif request.method == 'POST':
         form = ReportForm(request.POST)
         if form.is_valid():
             report = form.save(commit=False)
@@ -29,20 +27,24 @@ def create(request):
         else:
             error = 'something is wrong'
             return render(request, 'create.html', {'form': ReportForm(), 'error': error})
+    else:
+        error = 'something went wrong'
+        return render(request, 'create.html', {'form': ReportForm(), 'error': error})
 
 
-def detail(request, reportId):
-    report = get_object_or_404(Report, id=reportId, user=request.user)
-    # user = get_object_or_404(User, id=userId)
+def detail(request, report_id):
+    report = get_object_or_404(Report, id=report_id, user=request.user)
+    form = ReportForm(instance=report)
     if request.method == 'GET':
-        form = ReportForm(instance=report)
         return render(request, 'detail.html', {'form': form, 'report': report})
-    else:  # POST
-        form = ReportForm(request.POST, instance=report)
+    elif request.method == 'POST':
         if form.is_valid():
-            # if User.is_staff:
+            # TODO: user.is_staff
             form.save()
             return redirect('tasks')
         else:
             error = 'something went wrong'
             return render(request, 'detail.html', {'form': form, 'report': report, 'error': error})
+    else:
+        error = 'something went wrong'
+        return render(request, 'detail.html', {'form': form, 'report': report, 'error': error})
