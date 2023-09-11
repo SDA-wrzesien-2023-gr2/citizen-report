@@ -86,3 +86,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self) -> str:
         return f'{self.email}'
+
+    def get_absolute_url(self):
+        return "/authSystem/%i/" % (self.pk)
