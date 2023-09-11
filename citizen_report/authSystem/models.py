@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
 
 
@@ -85,7 +86,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     def __str__(self) -> str:
-        return f'{self.email}'
+        return f'Email: {self.email} ' \
+               f'Username: {self.username}'
 
     def get_absolute_url(self):
-        return "/authSystem/%i/" % (self.pk)
+        return reverse('User',args=self.pk)

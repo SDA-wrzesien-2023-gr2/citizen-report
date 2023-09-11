@@ -5,8 +5,9 @@
   <title>Custom User Model</title>
 </head>
 <body>
+  <a href="{% url 'home' %}">Home</a>
   {% if user.is_authenticated %}
-  Welcome, {{ user.email }}!
+  <p><a href="{% url 'profile' %}">My Profile</a></p>
   <p><a href="{% url 'logout' %}">Log Out</a></p>
     {% else %}
   <p>You are not logged in</p>
