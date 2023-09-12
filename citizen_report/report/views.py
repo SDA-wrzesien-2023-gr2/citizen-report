@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import Report
@@ -10,8 +11,7 @@ def home(request):
 
 def show_reports(request):
     user_reports = Report.objects.filter(user=request.user)
-    current = Report.objects.filter(user=request.user, created_at__isnull=True)
-    return render(request, 'reports.html', {'current': current, 'user_reports': user_reports})
+    return render(request, 'reports.html', {'user_reports': user_reports})
 
 
 def create(request):
@@ -25,11 +25,13 @@ def create(request):
             report.save()
             return redirect('reports')
         else:
-            error = 'something is wrong'
-            return render(request, 'create.html', {'form': ReportForm(), 'error': error})
+            error = 'wrong data in form'
+            return render(request, 'create.html', {'form': ReportForm(request.POST), 'error': error})
     else:
-        error = 'something went wrong'
-        return render(request, 'create.html', {'form': ReportForm(), 'error': error})
+        error = 'method not allowed'
+        return HttpResponse('405 - do zmiany!!!')
+        # return Response(status=status.HTTP_405)
+        # return render(request, 'create.html', {'form': ReportForm(request.POST), 'error': error})
 
 
 def detail(request, report_id):

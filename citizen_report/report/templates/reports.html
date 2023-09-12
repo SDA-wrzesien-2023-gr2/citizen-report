@@ -6,6 +6,13 @@ raporty
 
 {% block content %}
 
-<h3>Reports page.</h3>
+<h3>Your reports:.</h3>
+
+{% for report in user_reports %}
+<a href="{% url 'detail' report.id %}">{{report.title}}</a>
+{{report.created_at}}
+{{report.user}}
+<br>
+{% endfor %}
 
 {% endblock content %}
