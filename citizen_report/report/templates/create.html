@@ -8,12 +8,17 @@ tworzenie
 
 <h3>Creation page.</h3>
 
+{% if error %}
+{{error}}
+{% endif %}
 
+{% if form %}
 <form action="{% url 'create' %}" method="post">
     {{form}}
     {% csrf_token %}
     <button type="submit">Add task</button>
 </form>
+{% endif %}
 
 
 {% endblock content %}

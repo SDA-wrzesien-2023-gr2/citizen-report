@@ -29,24 +29,11 @@ def create(request):
             return render(request, 'create.html', {'form': ReportForm(request.POST), 'error': error})
     else:
         error = 'method not allowed'
-        return HttpResponse('405 - do zmiany!!!')
-        # return Response(status=status.HTTP_405)
-        # return render(request, 'create.html', {'form': ReportForm(request.POST), 'error': error})
+        # TODO: HttpResponse('405 - do zmiany!!!') or Response(status=status.HTTP_405) EXPLORE DOCS
+        return render(request, 'create.html', {'error': error})
 
 
 def detail(request, report_id):
     report = get_object_or_404(Report, id=report_id, user=request.user)
-    form = ReportForm(instance=report)
-    if request.method == 'GET':
-        return render(request, 'detail.html', {'form': form, 'report': report})
-    elif request.method == 'POST':
-        if form.is_valid():
-            # TODO: user.is_staff
-            form.save()
-            return redirect('tasks')
-        else:
-            error = 'something went wrong'
-            return render(request, 'detail.html', {'form': form, 'report': report, 'error': error})
-    else:
-        error = 'something went wrong'
-        return render(request, 'detail.html', {'form': form, 'report': report, 'error': error})
+    return render(request, 'detail.html', {'report': report})
+            # TODO: user.is_staff - this view or new one? for editing status of report - guidance needed, @login_required to add
