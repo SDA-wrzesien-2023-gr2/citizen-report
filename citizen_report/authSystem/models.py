@@ -74,11 +74,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
-    department = models.CharField(
-        max_length=100,
-        choices=Department.choices,
-        default=Department.APPLICANT
-    )
+    department = models.CharField(max_length=100, choices=Department.choices, default=Department.APPLICANT)
     date_joined = models.DateTimeField(auto_now_add=True)
 
     USERNAME_FIELD = 'username'
