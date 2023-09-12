@@ -62,7 +62,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         SEWER_AND_WATERWORKS = 'SWS', _('Sewer and waterworks'),
         POWER_SUPPLY = 'POW', _('Power supply'),
         GASWORKS = 'GAS', _('Gasworks'),
-        TELECOMUNICATION = 'TEL', _('Telecommunication'),
+        TELECOMMUNICATION = 'TEL', _('Telecommunication'),
         GARBAGE_DISPOSAL = 'GAR', _('Garbage disposal'),
         CITY_TRANSPORT = 'CTR', _('City transport'),
         HEALTHCARE = 'HTH', _('Healthcare'),
@@ -76,7 +76,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     department = models.CharField(
         max_length=100,
-        choices=Department.choices, default=Department.APPLICANT
+        choices=Department.choices,
+        default=Department.APPLICANT
     )
     date_joined = models.DateTimeField(auto_now_add=True)
 
@@ -91,4 +92,4 @@ class User(AbstractBaseUser, PermissionsMixin):
                f'Username: {self.username}'
 
     def get_absolute_url(self):
-        return reverse('SignUp',args=self.pk)
+        return reverse('SignUp', args=self.pk)
