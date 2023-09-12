@@ -70,7 +70,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         PUBLIC_SAFETY = 'SAF', _('Public safety')
 
     email = models.EmailField(max_length=100, unique=True)
-    username = models.CharField(max_length=100, null=True, blank=True)
+    username = models.CharField(max_length=100, unique=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -80,9 +80,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     date_joined = models.DateTimeField(auto_now_add=True)
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'username'
     EMAIL_FIELD = 'email'
-    REQUIRED_FIELDS = ['username',]
+    REQUIRED_FIELDS = ['email',]
 
     objects = UserManager()
 
