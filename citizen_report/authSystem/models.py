@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
+from .const import Department
 
 class UserManager(BaseUserManager):
 
@@ -47,7 +48,7 @@ class UserManager(BaseUserManager):
             password,
             is_staff=True,
             is_superuser=True,
-            department=self.model.Department.SYSTEM_SUPERVISOR,
+            department=self.model.Department.SYS,
             **extra_fields
         )
 
@@ -55,31 +56,18 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    class Department(models.TextChoices):
-        APPLICANT = 'APP', _('Applicant'),
-        SYSTEM_SUPERVISOR = 'SYS', _('System supervisor'),
-        ROADS_AND_BRIDGES = 'RBR', _('Roads and bridges'),
-        SEWER_AND_WATERWORKS = 'SWS', _('Sewer and waterworks'),
-        POWER_SUPPLY = 'POW', _('Power supply'),
-        GASWORKS = 'GAS', _('Gasworks'),
-        TELECOMMUNICATION = 'TEL', _('Telecommunication'),
-        GARBAGE_DISPOSAL = 'GAR', _('Garbage disposal'),
-        CITY_TRANSPORT = 'CTR', _('City transport'),
-        HEALTHCARE = 'HTH', _('Healthcare'),
-        EDUCATION = 'EDU', _('Education'),
-        PUBLIC_SAFETY = 'SAF', _('Public safety')
 
     email = models.EmailField(max_length=100, unique=True)
     username = models.CharField(max_length=100, unique=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
-    department = models.CharField(max_length=100, choices=Department.choices, default=Department.APPLICANT)
+    department = models.CharField(max_length=100, choices=Department.choices(), default=Department.APP)
     date_joined = models.DateTimeField(auto_now_add=True)
 
     USERNAME_FIELD = 'username'
     EMAIL_FIELD = 'email'
-    REQUIRED_FIELDS = ['email',]
+    REQUIRED_FIELDS = ['email', ]
 
     objects = UserManager()
 
