@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 
 class UserManager(BaseUserManager):
@@ -46,7 +47,7 @@ class UserManager(BaseUserManager):
             password,
             is_staff=True,
             is_superuser=True,
-            department='SYS',
+            department='SYSTEM_SUPERVISOR',
             **extra_fields
         )
 
@@ -54,20 +55,20 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    DEPARTMENT_CHOICES = [
-        ('APP', 'Applicant'),
-        ('SYS', 'System supervisor'),
-        ('RBR', 'Roads and bridges'),
-        ('SWS', 'Sewer and waterworks'),
-        ('POW', 'Power supply'),
-        ('GAS', 'Gasworks'),
-        ('TEL', 'Telecommunication'),
-        ('GAR', 'Garbage disposal'),
-        ('CTR', 'City transport'),
-        ('HTH', 'Healthcare'),
-        ('EDU', 'Education'),
-        ('SAF', 'Public safety')
-    ]
+    class Department(models.TextChoices):
+        APPLICANT = 'APP', _('Applicant'),
+        SYSTEM_SUPERVISOR = 'SYS', _('System supervisor'),
+        ROADS_AND_BRIDGES = 'RBR', _('Roads and bridges'),
+        SEWER_AND_WATERWORKS = 'SWS', _('Sewer and waterworks'),
+        POWER_SUPPLY = 'POW', _('Power supply'),
+        GASWORKS = 'GAS', _('Gasworks'),
+        TELECOMUNICATION = 'TEL', _('Telecommunication'),
+        GARBAGE_DISPOSAL = 'GAR', _('Garbage disposal'),
+        CITY_TRANSPORT = 'CTR', _('City transport'),
+        HEALTHCARE = 'HTH', _('Healthcare'),
+        EDUCATION = 'EDU', _('Education'),
+        PUBLIC_SAFETY = 'SAF', _('Public safety')
+
     email = models.EmailField(max_length=100, unique=True)
     username = models.CharField(max_length=100, null=True, blank=True)
     is_staff = models.BooleanField(default=False)
@@ -75,7 +76,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     department = models.CharField(
         max_length=100,
-        choices=DEPARTMENT_CHOICES, default='APP'
+        choices=Department.choices, default=Department.APPLICANT
     )
     date_joined = models.DateTimeField(auto_now_add=True)
 
@@ -90,4 +91,4 @@ class User(AbstractBaseUser, PermissionsMixin):
                f'Username: {self.username}'
 
     def get_absolute_url(self):
-        return reverse('User',args=self.pk)
+        return reverse('SignUp',args=self.pk)
