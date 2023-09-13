@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views import generic
 from django.views.generic.detail import DetailView
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 
 from .forms import CustomUserCreationForm
@@ -30,7 +30,10 @@ class PasswordChange(generic.FormView):
     def get_form_kwargs(self):
         kwargs = super(PasswordChange, self).get_form_kwargs()
         kwargs['user'] = self.request.user
-        if self.request.method == 'POST':
-            kwargs['data'] = self.request.POST
         return kwargs
+
+    def form_valid(self, form):
+        form.save()
+        update_session_auth_hash(self.request, form.user)
+        return super(PasswordChange, self).form_valid(form)
 

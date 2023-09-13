@@ -48,7 +48,7 @@ class UserManager(BaseUserManager):
             password,
             is_staff=True,
             is_superuser=True,
-            department=self.model.Department.SYS,
+            department=Department.SYS,
             **extra_fields
         )
 
