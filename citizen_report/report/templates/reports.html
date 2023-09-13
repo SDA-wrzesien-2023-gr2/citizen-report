@@ -6,9 +6,9 @@ raporty
 
 {% block content %}
 
-<h3>Your reports:</h3>
+<h3>Reports:</h3>
 
-{% for report in user_reports %}
+{% for report in reports %}
 <a href="{% url 'detail' report.id %}">{{report.title}}</a>
 {{report.created_at}}
 {{report.user}}

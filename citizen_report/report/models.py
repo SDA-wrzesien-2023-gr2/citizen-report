@@ -11,8 +11,7 @@ class Report(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     image = models.ImageField(upload_to='images/', blank=True)
     category = models.CharField(max_length=3, choices=Category.choices)
-    status = models.CharField(max_length=2, choices=Status.choices, default='PN')
-    # TODO: not sure if this was the case - hard coding
+    status = models.CharField(max_length=2, choices=Status.choices, default=Status.PENDING)
     user = models.ForeignKey(User, related_name='reports', on_delete=models.CASCADE)
     clerk = models.ForeignKey(User, related_name='assigned_reports', null=True, on_delete=models.CASCADE)
 
