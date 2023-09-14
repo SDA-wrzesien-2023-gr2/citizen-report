@@ -19,5 +19,3 @@ class Status(models.TextChoices):
     CHECKING = 'CH', 'Checking'
     REJECTED = 'VD', 'Rejected'
     APPROVED = 'AP', 'Approved'
-
-    # TODO ask if commas at the end of aech line ???

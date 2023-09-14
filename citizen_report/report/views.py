@@ -14,6 +14,7 @@ def list_reports(request):
     reports = Report.objects.all()
     return render(request, 'reports.html', {'reports': reports})
 
+
 @login_required
 def create(request):
     if request.method == 'GET':
@@ -29,14 +30,10 @@ def create(request):
             error = 'wrong data in form'
             return render(request, 'create.html', {'form': ReportForm(request.POST), 'error': error})
     else:
-        return render(request, "Error Pages/405.html", status=405)
+        return render(request, "405.html", status=405)
 
 
 @login_required
 def detail(request, report_id):
     report = get_object_or_404(Report, id=report_id)
     return render(request, 'detail.html', {'report': report})
-
-
-
-# TODO: user.is_staff - this view or new one? for editing status of report - guidance needed, @login_required to add
