@@ -7,3 +7,9 @@ class ReportForm(forms.ModelForm):
     class Meta:
         model = Report
         fields = ('title', 'text', 'image', 'category')
+
+
+class EditReportForm(forms.ModelForm):
+    class Meta:
+        model = Report
+        fields = ('title', 'text', 'image', 'category')

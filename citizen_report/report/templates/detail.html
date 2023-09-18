@@ -16,7 +16,9 @@ Strona ze szczegółami
 <p>{{report.get_category_display}}</p>
 <p>{{report.get_status_display}}</p>
 <p>{{report.user.username}}</p>
+{% if report.clerk %}
 <p>{{report.clerk}}</p>
+{% endif %}
 
 {% if report.image %}}
 <img src="{{report.image.url}}" alt="Post image">
