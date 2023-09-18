@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Strona ze szczegółami
+{% endblock title %}
+
+{% block content %}
+
+<h3>Details page.</h3>
+
+<h4>{{report.title}}</h4>
+<a>{{report.text}}</a>
+<p>{{report.created_at}}</p>
+<p>{{report.updated_at}}</p>
+<p>{{report.image}}</p>
+<p>{{report.get_category_display}}</p>
+<p>{{report.user.username}}</p>
+
+
+{% if report.image %}}
+<img src="{{report.image.url}}" alt="Post image">
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Change status</button>
+</form>
+
+{% endblock content %}

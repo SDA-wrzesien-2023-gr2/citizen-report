@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}
+raporty
+{% endblock title %}
+
+{% block content %}
+
+<h3>My reports to evaluate:</h3>
+
+{% for report in reports %}
+<a href="{% url 'update_report' report.id %}">{{report.title}}</a>
+{{report.updated_at}}
+{{report.user}}
+<br>
+{% endfor %}
+
+{% endblock content %}
