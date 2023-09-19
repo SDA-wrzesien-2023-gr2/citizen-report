@@ -7,6 +7,7 @@ from .constants import Category, Status
 
 User = get_user_model()
 
+
 class Report(models.Model):
     title = models.CharField(max_length=120)
     text = models.TextField()
