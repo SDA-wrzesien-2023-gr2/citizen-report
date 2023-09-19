@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.conf import settings
+from django.db.models import Count
 
 from .constants import Category, Status
 
@@ -23,14 +24,5 @@ class Report(models.Model):
     def save(self, *args, **kwargs):
         if not self.clerk:
             available_clerks = User.objects.filter(department=self.category).all()
-            for clerk in available_clerks:
-                clerk_count = clerk.assigned_reports.all().count()
-                if clerk == available_clerks[0]:
-                    prev_clerk_count = clerk_count
-                    available_clerk = clerk
-                else:
-                    if prev_clerk_count > clerk_count:
-                        available_clerk = clerk
-                        prev_clerk_count = clerk_count
-            self.clerk = available_clerk
+            self.clerk = available_clerks.annotate(num_reports=Count("assigned_reports")).order_by("num_reports")[0]
         return super().save(*args, **kwargs)
