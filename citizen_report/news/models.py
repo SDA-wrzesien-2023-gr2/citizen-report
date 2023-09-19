@@ -9,7 +9,7 @@ User = get_user_model()
 class NewsPost(models.Model):
     title = models.CharField(max_length=200, unique=True)
     text = models.TextField()
-    created_at = models.DateField()
+    created_at = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(upload_to='images/', blank=True)
     clerk = models.ForeignKey(User, on_delete=models.CASCADE, related_name='news_posts')
     report = models.ForeignKey(Report, on_delete=models.CASCADE, related_name='report_posts')
