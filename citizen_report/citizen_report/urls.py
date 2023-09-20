@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('authSystem/', include('authSystem.urls')),
     path('', include('report.urls')),
+    path('', include('news.urls')),
 ]
