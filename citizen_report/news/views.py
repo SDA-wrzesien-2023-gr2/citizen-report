@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -13,7 +15,12 @@ from report.models import Report
 #     template_name = 'news.html'
 
 
-class NewsPostCreate(generic.CreateView):
+class PostDetail(generic.DetailView):
+    model = NewsPost
+    template_name = 'detail_post.html'
+
+
+class NewsPostCreate(LoginRequiredMixin, generic.CreateView):
     form_class = NewsPostCreationForm
     success_url = reverse_lazy("home")
     template_name = "create_post.html"
@@ -30,9 +37,9 @@ class NewsPostCreate(generic.CreateView):
 
 
 def news(request, report_id):
-
     report = Report.objects.filter(id=report_id).first()
 
     posts = report.report_posts.all()
 
-    return render(request, 'news.html',{'newspost_list':posts, 'report':report})
+    return render(request, 'news.html', {'newspost_list': posts, 'report': report})
+

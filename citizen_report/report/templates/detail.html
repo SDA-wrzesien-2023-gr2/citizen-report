@@ -26,10 +26,12 @@ Strona ze szczegółami
 
 <!--prev & next would be useful, get_previous_by_ does not seem to work-->
 
-{% if posts %}
 <p>
-    <a href="{% url 'news' report.id %}">Check news</a>
+    {% if posts %}
+        <a href="{% url 'news' report.id %}">Check news</a>
+    {% endif %}
+    <a href="{{request.META.HTTP_REFERER|escape}}">Back</a>
 </p>
-{% endif %}
+
 
 {% endblock content %}

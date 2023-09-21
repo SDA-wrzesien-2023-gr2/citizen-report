@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+
+{%block title%}
+{{post.title}}
+{% endblock title%}
+
+{% block content %}
+
+
+<h1>{{newspost.title}}</h1>
+<p>{{ newspost.clerk }} | {{ newspost.created_at}} </p>
+{% if newspost.image %}
+<img src="{{newspost.image.url}}" alt="Post image" default >
+{% endif %}
+<p>{{newspost.text|safe  }}</p>
+
+<p>
+    <a href="{{request.META.HTTP_REFERER|escape}}">Back</a>
+</p>
+
+{% endblock content %}

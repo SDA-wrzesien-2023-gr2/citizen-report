@@ -9,6 +9,9 @@
 <p>
   {{ object }}
 </p>
-<p><a href="{% url 'change_password' %}">Change password</a></p>
+<p>
+  <a href="{% url 'change_password' %}">Change password</a>
+  <a href="{{request.META.HTTP_REFERER|escape}}">Back</a>
+</p>
 
 {% endblock %}

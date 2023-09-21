@@ -27,4 +27,8 @@ Strona ze szczegółami
     <button type="submit">Change status</button>
 </form>
 
+<p>
+    <a href="{{request.META.HTTP_REFERER|escape}}">Back</a>
+</p>
+
 {% endblock content %}
