@@ -20,16 +20,16 @@ Strona ze szczegółami
 <p>{{report.clerk}}</p>
 {% endif %}
 
-{% if report.image %}}
+{% if report.image %}
 <img src="{{report.image.url}}" alt="Post image">
 {% endif %}
 
 <!--prev & next would be useful, get_previous_by_ does not seem to work-->
 
-{% if report.report_posts %}}
+{% if posts %}
 <p>
     <a href="{% url 'news' report.id %}">Check news</a>
 </p>
-{% endif %}}
+{% endif %}
 
 {% endblock content %}

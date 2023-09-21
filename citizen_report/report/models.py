@@ -19,8 +19,11 @@ class Report(models.Model):
     user = models.ForeignKey(User, related_name='reports', on_delete=models.CASCADE)
     clerk = models.ForeignKey(User, related_name='assigned_reports', null=True, on_delete=models.CASCADE)
 
+    class Meta:
+        ordering = ['-updated_at']
+
     def __str__(self):
-        return f'{self.title} | {self.created_at}'
+        return f'{self.title} | {self.updated_at}'
 
     def save(self, *args, **kwargs):
         if not self.clerk:

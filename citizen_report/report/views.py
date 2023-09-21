@@ -41,7 +41,8 @@ def create(request):
 @login_required
 def detail(request, report_id):
     report = get_object_or_404(Report, id=report_id)
-    return render(request, 'detail.html', {'report': report})
+    posts = report.report_posts.all()
+    return render(request, 'detail.html', {'report': report,'posts':posts})
 
 
 @login_required
