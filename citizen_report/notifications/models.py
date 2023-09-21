@@ -3,8 +3,10 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
 
+from authSystem.models import  User
+
 Report = 'report.Report'
-User = 'authSystem.User'
+# User = 'authSystem.User'
 
 
 class Notification(models.Model):
@@ -20,9 +22,12 @@ class Notification(models.Model):
 
 # UNDER CONSTRUCTION:
 @receiver(post_save, sender=Report)
-def create_notification(sender, instance, **kwargs):
+def create_notification(sender, created, instance, update_fields, **kwargs):
+    message = f'new report {instance.title} added!' if created else f'report status or firlds:{update_fields} changed'
     notification = Notification(report=instance, user=instance.user, sent_at=timezone.now,
-                                message='zmiana lub dodanie', is_read=False)
+                                message=message, is_read=False)
+    notification.save()
     print(notification)
     print(instance)
-
+    print(created)
+    print(update_fields)
