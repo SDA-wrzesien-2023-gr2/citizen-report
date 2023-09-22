@@ -15,6 +15,20 @@
 {% endif %}
 <p>{{newspost.text|safe  }}</p>
 
+<hr>
+<p>
+    <a href="{% url 'add_comment_to_post' newspost.id %}">Add comment</a>
+</p>
+{% for comment in newspost.comments.all %}
+<div>
+    <div>{{ comment.created_at }}</div>
+    <strong>{{ comment.name }}</strong>
+    <p>{{ comment.text|linebreaks }}</p>
+</div>
+{% empty %}
+<p>No comments here yet :(</p>
+{% endfor %}
+
 <p>
     <a href="{{request.META.HTTP_REFERER|escape}}">Back</a>
 </p>

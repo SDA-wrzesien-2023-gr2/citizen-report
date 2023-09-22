@@ -1,18 +1,19 @@
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
 
-from .forms import NewsPostCreationForm
+from .forms import NewsPostCreationForm, CommentForm
 from .models import NewsPost
-from report.models import Report
 
 
-# class NewsPostList(generic.ListView):
-#     model = NewsPost
-#     queryset = NewsPost.objects.filter(report=report).all().order_by('-created_at')
-#     template_name = 'news.html'
+class NewsPostList(generic.ListView):
+    model = NewsPost
+    template_name = 'news.html'
+
+    def get_queryset(self, **kwargs):
+        queryset = super().get_queryset(**kwargs)
+        return queryset.filter(report_id=self.kwargs['pk'])
 
 
 class PostDetail(generic.DetailView):
@@ -36,10 +37,19 @@ class NewsPostCreate(LoginRequiredMixin, generic.CreateView):
         return super(NewsPostCreate, self).form_valid(form)
 
 
-def news(request, report_id):
-    report = Report.objects.filter(id=report_id).first()
-
-    posts = report.report_posts.all()
-
-    return render(request, 'news.html', {'newspost_list': posts, 'report': report})
-
+def add_comment_to_post(request, pk):
+    post = get_object_or_404(NewsPost, pk=pk)
+    comments = post.comments.filter(approved_comment=True)
+    comment = None
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+    else:
+        form = CommentForm()
+    return render(request, 'add_comment_to_post.html', {'post': post,
+                                                        'comments': comments,
+                                                        'comment': comment,
+                                                        'form': form})
