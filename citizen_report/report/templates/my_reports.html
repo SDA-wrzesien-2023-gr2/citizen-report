@@ -1,22 +1,27 @@
 {% extends 'base.html' %}
 
 {% block title %}
-raporty
+My reports
 {% endblock title %}
 
 {% block content %}
 
-<h3>My reports to evaluate:</h3>
 
-{% for report in reports %}
-<a href="{% url 'update_report' report.id %}">{{report.title}}</a>
-{{report.updated_at}}
-{{report.user}}
-<br>
-{% endfor %}
-<p>
-    <a href="{% url 'create_post' %}">Create post</a>
-</p>
+<h3>My reports to evaluate:</h3>
+{% if reports %}
+    {% for report in reports %}
+        <a href="{% url 'update_report' report.id %}">{{report.title}}</a>
+        {{report.updated_at}}
+        {{report.user}}
+        <br>
+    {% endfor %}
+    <p>
+        <a href="{% url 'create_news' %}">Create post</a>
+    </p>
+{% else %}
+    <p>No reports to evaluate </p>
+
+{% endif %}
 
 
 {% endblock content %}

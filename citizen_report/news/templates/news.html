@@ -9,7 +9,7 @@
     <p>{{post.clerk}} | {{post.created_at}} </p>
     <p>{{post.text|slice:":200" }}</p>
     <p>Comments: {{ post.comments.count }}</p>
-    <a href="{% url 'detail_post' post.id %}">Read More &rarr;</a>
+    <a href="{% url 'detail_news' post.id %}">Read More &rarr;</a>
 {% endfor %}
 
 <p>

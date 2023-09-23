@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
 
-from .forms import NewsPostCreationForm, CommentForm
+from .forms import NewsForm, NewsCommentForm
 from .models import NewsPost
 
 
@@ -16,15 +16,15 @@ class NewsPostList(generic.ListView):
         return queryset.filter(report_id=self.kwargs['pk'])
 
 
-class PostDetail(generic.DetailView):
+class NewsPostDetail(generic.DetailView):
     model = NewsPost
-    template_name = 'detail_post.html'
+    template_name = 'detail_news.html'
 
 
 class NewsPostCreate(LoginRequiredMixin, generic.CreateView):
-    form_class = NewsPostCreationForm
-    success_url = reverse_lazy("home")
-    template_name = "create_post.html"
+    form_class = NewsForm
+    success_url = reverse_lazy("my_reports")
+    template_name = "create_news.html"
 
     def get_form_class(self):
         modelform = super().get_form_class()
@@ -37,19 +37,17 @@ class NewsPostCreate(LoginRequiredMixin, generic.CreateView):
         return super(NewsPostCreate, self).form_valid(form)
 
 
-def add_comment_to_post(request, pk):
-    post = get_object_or_404(NewsPost, pk=pk)
-    comments = post.comments.filter(approved_comment=True)
-    comment = None
-    if request.method == "POST":
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.post = post
-            comment.save()
-    else:
-        form = CommentForm()
-    return render(request, 'add_comment_to_post.html', {'post': post,
-                                                        'comments': comments,
-                                                        'comment': comment,
-                                                        'form': form})
+class NewsCommentCreate(LoginRequiredMixin, generic.CreateView):
+    form_class = NewsCommentForm
+    template_name = "add_comment_to_news.html"
+
+    def form_valid(self, form):
+        user = self.request.user
+        post = get_object_or_404(NewsPost, pk=self.kwargs['pk'])
+        form.instance.post = post
+        form.instance.user = user if user else None
+        return super(NewsCommentCreate, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('detail_news', kwargs={'pk': self.kwargs.get('pk')})
+

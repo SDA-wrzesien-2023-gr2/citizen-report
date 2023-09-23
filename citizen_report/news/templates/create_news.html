@@ -9,4 +9,7 @@
     {{ form.as_p }}
     <button type="submit">Create post</button>
 </form>
+<p>
+    <a href="{{request.META.HTTP_REFERER|escape}}">Back</a>
+</p>
 {% endblock %}

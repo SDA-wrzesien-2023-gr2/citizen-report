@@ -1,18 +1,18 @@
 from django import forms
 
-from .models import NewsPost, Comment
+from .models import NewsPost, NewsComment
 
 
-class NewsPostCreationForm(forms.ModelForm):
+class NewsForm(forms.ModelForm):
     class Meta:
         model = NewsPost
         fields = ('report', 'title', 'text', 'image')
 
 
-class CommentForm(forms.ModelForm):
+class NewsCommentForm(forms.ModelForm):
 
     class Meta:
-        model = Comment
-        fields = ('name', 'text')
+        model = NewsComment
+        fields = ('text',)
 
 
