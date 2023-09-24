@@ -3,7 +3,126 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<h1>HOME</h1>
+<div style="padding:5px;">
+    <form action="{% url 'reports' %}" method="post">
+        {% csrf_token %}
+        <label style="cursor:pointer;">
+            <input style="display:none" type="submit" value=RBR name="category">Roads and bridges
+            <span>
+            Roads and bridges
+        </span>
+        </label>
+    </form>
+</div>
+<div style="padding:5px;">
+    <form action="{% url 'reports' %}" method="post">
+        {% csrf_token %}
+        <label style="cursor:pointer;">
+            <input style="display:none"  type="submit" value=SWS name="category">
+            <span>
+            Sewer and waterworks
+        </span>
+        </label>
+    </form>
+</div>
+<div style="padding:5px;">
+    <form action="{% url 'reports' %}" method="post">
+        {% csrf_token %}
+        <label style="cursor:pointer;">
+            <input style="display:none"  type="submit" value=POW name="category">
+            <span>
+            Power supply
+        </span>
+        </label>
+    </form>
+</div>
+<div style="padding:5px;">
+    <form action="{% url 'reports' %}" method="post">
+        {% csrf_token %}
+        <label style="cursor:pointer;">
+            <input style="display:none"  type="submit" value=GAS name="category">
+            <span>
+            Gasworks
+        </span>
+        </label>
+    </form>
+</div>
+<div style="padding:5px;">
+    <form action="{% url 'reports' %}" method="post">
+        {% csrf_token %}
+        <label style="cursor:pointer;">
+            <input style="display:none"  type="submit" value=TEL name="category">
+            <span>
+            Telecommunication
+        </span>
+        </label>
+    </form>
+</div>
+<div style="padding:5px;">
+    <form action="{% url 'reports' %}" method="post">
+        {% csrf_token %}
+        <label style="cursor:pointer;">
+            <input style="display:none"  type="submit" value=GAR name="category">
+            <span>
+            Garbage disposal
+        </span>
+        </label>
+    </form>
+</div>
+<div style="padding:5px;">
+    <form action="{% url 'reports' %}" method="post">
+        {% csrf_token %}
+        <label style="cursor:pointer;">
+            <input style="display:none"  type="submit" value=CTR name="category">
+            <span>
+            City transport
+        </span>
+        </label>
+    </form>
+</div>
+<div style="padding:5px;">
+    <form action="{% url 'reports' %}" method="post">
+        {% csrf_token %}
+        <label style="cursor:pointer;">
+            <input style="display:none"  type="submit" value=HTH name="category">
+            <span>
+            Healthcare
+        </span>
+        </label>
+    </form>
+</div>
+<div style="padding:5px;">
+    <form action="{% url 'reports' %}" method="post">
+        {% csrf_token %}
+        <label style="cursor:pointer;">
+            <input style="display:none"  type="submit" value=EDU name="category">
+            <span>
+            Education
+        </span>
+        </label>
+    </form>
+</div>
+<div style="padding:5px;">
+    <form action="{% url 'reports' %}" method="post">
+        {% csrf_token %}
+        <label style="cursor:pointer;">
+            <input style="display:none"  type="submit" value=SAF name="category">
+            <span>
+            Public safety
+        </span>
+        </label>
+    </form>
+</div>
+
+<h3>Last 5 reports:</h3>
+{% for report in reports %}
+<p>
+    <a href="{% url 'detail' report.id %}">{{report.title}}</a>
+    {{report.created_at}}
+    {{report.get_category_display}}
+    {{report.user}}
+</p>
+{% endfor %}
 
 
 {% endblock %}

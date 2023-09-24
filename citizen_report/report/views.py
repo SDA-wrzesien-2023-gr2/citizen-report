@@ -6,11 +6,12 @@ from .forms import ReportForm
 
 
 def home(request):
-    return render(request, 'home.html')
+    reports = Report.objects.order_by('-created_at')[:5]
+    return render(request, 'home.html', {'reports': reports})
 
 
 def list_reports(request):
-    reports = Report.objects.all()
+    reports = Report.objects.filter(category__contains=request.POST.get('category')).all()
     return render(request, 'reports.html', {'reports': reports})
 
 

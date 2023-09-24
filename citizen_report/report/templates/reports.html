@@ -7,12 +7,17 @@ raporty
 {% block content %}
 
 <h3>Reports:</h3>
-
-{% for report in reports %}
-<a href="{% url 'detail' report.id %}">{{report.title}}</a>
-{{report.created_at}}
-{{report.user}}
-<br>
-{% endfor %}
+{% if reports %}
+    {% for report in reports %}
+    <a href="{% url 'detail' report.id %}">{{report.title}}</a>
+    {{report.created_at}}
+    {{report.user}}
+    <br>
+    {% endfor %}
+{% else %}
+    <p>
+        No reports in category
+    </p>
+{% endif %}
 
 {% endblock content %}
