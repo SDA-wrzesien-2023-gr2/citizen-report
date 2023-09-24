@@ -11,7 +11,7 @@ raporty
     {% for report in reports %}
     <a href="{% url 'detail' report.id %}">{{report.title}}</a>
     {{report.created_at}}
-    {{report.user}}
+    {{report.user.username}}
     <br>
     {% endfor %}
 {% else %}
