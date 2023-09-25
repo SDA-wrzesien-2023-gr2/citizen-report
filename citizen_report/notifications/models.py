@@ -3,11 +3,11 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
 from django.core.mail import send_mail
+from django.conf import settings
 
-from authSystem.models import  User
+from report.models import Report
 
-Report = 'report.Report'
-# User = 'authSystem.User'
+User = settings.AUTH_USER_MODEL
 
 
 class Notification(models.Model):
@@ -34,7 +34,7 @@ def create_notification(sender, created, instance, update_fields, **kwargs):
     clerk = instance.clerk
     send_mail(
         f'subject: {message}',
-        f'{notification.__repr__()}',
+        f'{repr(notification)}',
         f'{clerk.email}',
         [f'{instance.user.email}'],
     )
