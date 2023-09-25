@@ -11,7 +11,10 @@ def home(request):
 
 
 def list_reports(request):
-    reports = Report.objects.filter(category__contains=request.POST.get('category')).all()
+    if request.POST.get('category'):
+        reports = Report.objects.filter(category__contains=request.POST.get('category')).all()
+    else:
+        reports = Report.objects.all()
     return render(request, 'reports.html', {'reports': reports})
 
 

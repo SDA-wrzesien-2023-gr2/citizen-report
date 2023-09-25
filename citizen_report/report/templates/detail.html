@@ -1,14 +1,12 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Strona ze szczegółami
+{{report.title}}
 {% endblock title %}
 
 {% block content %}
 
-<h3>Details page.</h3>
-
-<h4>{{report.title}}</h4>
+<h2>{{report.title}}</h2>
 <a>{{report.text}}</a>
 <p>{{report.created_at}}</p>
 <p>{{report.updated_at}}</p>
