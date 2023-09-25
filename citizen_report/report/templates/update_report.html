@@ -28,6 +28,10 @@ Strona ze szczegółami
 </form>
 
 <p>
+    <a href="{% url 'create_news' report.id %}">Create post</a>
+</p>
+
+<p>
     <a href="{{request.META.HTTP_REFERER|escape}}">Back</a>
 </p>
 

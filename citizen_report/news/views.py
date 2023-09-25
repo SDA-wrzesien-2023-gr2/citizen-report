@@ -5,6 +5,7 @@ from django.views import generic
 
 from .forms import NewsForm, NewsCommentForm
 from .models import NewsPost
+from report.models import Report
 
 
 class NewsPostList(generic.ListView):
@@ -26,14 +27,9 @@ class NewsPostCreate(LoginRequiredMixin, generic.CreateView):
     success_url = reverse_lazy("my_reports")
     template_name = "create_news.html"
 
-    def get_form_class(self):
-        modelform = super().get_form_class()
-        modelform.base_fields['report'].limit_choices_to = {'clerk': self.request.user}
-        return modelform
-
     def form_valid(self, form):
-        user = self.request.user
-        form.instance.clerk = user if user else None
+        form.instance.report = get_object_or_404(Report, pk=self.kwargs['pk'])
+        form.instance.clerk = self.request.user
         return super(NewsPostCreate, self).form_valid(form)
 
 
@@ -42,10 +38,8 @@ class NewsCommentCreate(LoginRequiredMixin, generic.CreateView):
     template_name = "add_comment_to_news.html"
 
     def form_valid(self, form):
-        user = self.request.user
-        post = get_object_or_404(NewsPost, pk=self.kwargs['pk'])
-        form.instance.post = post
-        form.instance.user = user if user else None
+        form.instance.post = get_object_or_404(NewsPost, pk=self.kwargs['pk'])
+        form.instance.user = self.request.user
         return super(NewsCommentCreate, self).form_valid(form)
 
     def get_success_url(self):

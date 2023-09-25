@@ -12,9 +12,7 @@
   <a href="{% url 'home' %}">Home</a>
   <a href="{% url 'reports' %}">View reports</a>
   {% if user.is_authenticated %}
-    {% if user.is_staff %}
-      <a href="{% url 'my_reports' %}">My reports</a>
-    {% endif %}
+    <a href="{% url 'my_reports' %}">My reports</a>
     <a href="{% url 'create' %}">Create report</a>
     <a href="{% url 'profile' %}">My Profile</a>
     <a href="{% url 'logout' %}">Log Out</a>

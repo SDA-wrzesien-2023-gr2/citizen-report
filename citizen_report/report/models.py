@@ -17,7 +17,7 @@ class Report(models.Model):
     category = models.CharField(max_length=3, choices=Category.choices)
     status = models.CharField(max_length=2, choices=Status.choices, default=Status.PENDING)
     user = models.ForeignKey(User, related_name='reports', on_delete=models.CASCADE)
-    clerk = models.ForeignKey(User, related_name='assigned_reports', null=True, on_delete=models.CASCADE)
+    clerk = models.ForeignKey(User, related_name='assigned_reports', on_delete=models.CASCADE)
 
     class Meta:
         ordering = ['-updated_at']
@@ -27,6 +27,6 @@ class Report(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.clerk:
-            available_clerks = User.objects.filter(department=self.category).all()
-            self.clerk = available_clerks.annotate(num_reports=Count("assigned_reports")).order_by("num_reports")[0]
+            available_clerks = User.objects.filter(department=self.category).filter(is_staff=True).all()
+            self.clerk = available_clerks.annotate(num_reports=Count("assigned_reports")).order_by("num_reports").first()
         return super().save(*args, **kwargs)

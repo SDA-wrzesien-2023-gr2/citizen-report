@@ -29,6 +29,8 @@ Strona ze szczegółami
 <p>
     {% if posts %}
         <a href="{% url 'news' report.id %}">Check news</a>
+    {% else %}
+        <h4>No news</h4>
     {% endif %}
     <a href="{{request.META.HTTP_REFERER|escape}}">Back</a>
 </p>

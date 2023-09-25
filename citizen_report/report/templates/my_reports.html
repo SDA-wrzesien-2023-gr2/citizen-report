@@ -6,18 +6,23 @@ My reports
 
 {% block content %}
 
-
+{% if user.is_staff %}
 <h3>My reports to evaluate:</h3>
+{% else %}
+<h3>My reports:</h3>
+{% endif %}
+
 {% if reports %}
     {% for report in reports %}
-        <a href="{% url 'update_report' report.id %}">{{report.title}}</a>
+        {% if user.is_staff %}
+            <a href="{% url 'update_report' report.id %}">{{report.title}}</a>
+        {% else %}
+            <a href="{% url 'detail' report.id %}">{{report.title}}</a>
+        {% endif %}
         {{report.updated_at}}
         {{report.user}}
         <br>
     {% endfor %}
-    <p>
-        <a href="{% url 'create_news' %}">Create post</a>
-    </p>
 {% else %}
     <p>No reports to evaluate </p>
 

@@ -6,7 +6,7 @@ from .models import NewsPost, NewsComment
 class NewsForm(forms.ModelForm):
     class Meta:
         model = NewsPost
-        fields = ('report', 'title', 'text', 'image')
+        fields = ('title', 'text', 'image')
 
 
 class NewsCommentForm(forms.ModelForm):
