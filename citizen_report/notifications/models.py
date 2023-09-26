@@ -21,7 +21,7 @@ class Notification(models.Model):
         return self.message
 
     def __repr__(self):
-        return self.report, self.user, self.sent_at, self.message, self.is_read
+        return f'{self.report}, {self.user}, {self.sent_at}, {self.message}, {self.is_read}'
 
 
 # UNDER CONSTRUCTION:
