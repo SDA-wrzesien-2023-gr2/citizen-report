@@ -1,7 +1,7 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views import generic
-from django.views.generic.detail import DetailView
 from django.contrib.auth import get_user_model, update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView
@@ -16,7 +16,7 @@ class SignUp(generic.CreateView):
     template_name = "signup.html"
 
 
-class UserView(DetailView):
+class UserView(LoginRequiredMixin, generic.DetailView):
     template_name = 'profile.html'
 
     def get_object(self, **kwargs):

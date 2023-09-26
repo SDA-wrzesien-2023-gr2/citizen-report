@@ -10,7 +10,7 @@ raporty
 {% if reports %}
     {% for report in reports %}
     <a href="{% url 'detail' report.id %}">{{report.title}}</a>
-    {{report.created_at}}
+    {{report.updated_at}}
     {{report.user.username}}
     <br>
     {% endfor %}

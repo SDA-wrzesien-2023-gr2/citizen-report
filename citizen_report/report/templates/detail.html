@@ -14,12 +14,24 @@
 <p>{{report.get_category_display}}</p>
 <p>{{report.get_status_display}}</p>
 <p>{{report.user.username}}</p>
+{% if report.clerk %}
 <p>{{report.clerk}}</p>
+{% endif %}
 
-{% if report.image %}}
+{% if report.image %}
 <img src="{{report.image.url}}" alt="Post image">
 {% endif %}
 
 <!--prev & next would be useful, get_previous_by_ does not seem to work-->
+
+<p>
+    {% if posts %}
+        <a href="{% url 'news' report.id %}">Check news</a>
+    {% else %}
+        <h4>No news</h4>
+    {% endif %}
+    <a href="{{request.META.HTTP_REFERER|escape}}">Back</a>
+</p>
+
 
 {% endblock content %}

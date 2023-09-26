@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+
+{%block title%}
+{{post.title}}
+{% endblock title%}
+
+{% block content %}
+
+
+<h1>{{newspost.title}}</h1>
+<p>{{ newspost.clerk }} | {{ newspost.created_at}} </p>
+{% if newspost.image %}
+<img src="{{news.image.url}}" alt="Post image" default >
+{% endif %}
+<p>{{newspost.text|safe  }}</p>
+
+<hr>
+{% if user.is_authenticated %}
+<p>
+    <a href="{% url 'add_comment_to_news' newspost.id %}">Add comment</a>
+</p>
+{% else %}
+<p><a href="{% url 'login' %}">Log in</a> to comment</p>
+{% endif %}
+
+{% for comment in newspost.comments.all %}
+    {% if comment.approved_comment %}
+        <div>
+            <div>{{ comment.created_at }}</div>
+            <strong>{{ comment.user.username }}</strong>
+            <p>{{ comment.text|linebreaks }}</p>
+        </div>
+    {% endif %}
+{% empty %}
+<div>
+    <div>
+        <h3>No comments here yet</h3>
+    </div>
+    <div>Be the first to comment
+    </div>
+</div>
+{% endfor %}
+
+<p>
+    <a href="{{request.META.HTTP_REFERER|escape}}">Back</a>
+</p>
+
+{% endblock content %}
