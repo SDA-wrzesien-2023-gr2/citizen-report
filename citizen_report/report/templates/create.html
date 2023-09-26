@@ -14,7 +14,9 @@ tworzenie
 
 {% if form %}
 <form action="{% url 'create' %}" method="post">
-    {{form}}
+    <div class="form-group">
+        {{form.as_p}}
+    </div>
     {% csrf_token %}
     <button type="submit">Add task</button>
 </form>
