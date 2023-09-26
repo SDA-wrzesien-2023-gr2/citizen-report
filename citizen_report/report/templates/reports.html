@@ -9,10 +9,12 @@ raporty
 <h3>Reports:</h3>
 
 {% for report in reports %}
-<a href="{% url 'detail' report.id %}">{{report.title}}</a>
-{{report.created_at}}
-{{report.user}}
-<br>
+<p>
+    <a href="{% url 'detail' report.id %}">{{report.title}}</a>
+   {{report.updated_at}}
+   {{report.user}}
+</p>
+
 {% endfor %}
 
 {% endblock content %}
