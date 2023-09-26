@@ -1,6 +1,8 @@
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views import generic
 
 from .forms import NewsForm, NewsCommentForm
@@ -22,6 +24,7 @@ class NewsPostDetail(generic.DetailView):
     template_name = 'detail_news.html'
 
 
+# @method_decorator(staff_member_required, name='dispatch')
 class NewsPostCreate(LoginRequiredMixin, generic.CreateView):
     form_class = NewsForm
     success_url = reverse_lazy("my_reports")

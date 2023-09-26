@@ -65,5 +65,5 @@ def update_status(request, report_id):
         else:
             return render(request, "405.html", status=405)
     else:
-        return render(request, "405.html", status=405)
+        return render(request, "403.html", status=403)
 
