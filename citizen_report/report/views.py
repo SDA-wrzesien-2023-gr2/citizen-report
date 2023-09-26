@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from .forms import ReportForm, UpdateReportForm
 from .models import Report
+from .utils import assign_clerk
 
 
 def home(request):
@@ -32,6 +33,7 @@ def create(request):
         if form.is_valid():
             report = form.save(commit=False)
             report.user = request.user
+            assign_clerk(report)
             report.save()
             return redirect('reports')
         else:
