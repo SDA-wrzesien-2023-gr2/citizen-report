@@ -24,8 +24,3 @@ class Report(models.Model):
     def __str__(self):
         return f'{self.title} | {self.updated_at}'
 
-    def save(self, *args, **kwargs):
-        if not self.clerk:
-            available_clerks = User.objects.filter(department=self.category).filter(is_staff=True).all()
-            self.clerk = available_clerks.annotate(num_reports=Count("assigned_reports")).order_by("num_reports").first()
-        return super().save(*args, **kwargs)
