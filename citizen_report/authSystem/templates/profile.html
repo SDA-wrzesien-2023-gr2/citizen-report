@@ -1,3 +1,5 @@
+
+
 {% extends 'base.html' %}
 
 {% block title %}Sign Up{% endblock %}
@@ -7,7 +9,8 @@
 <p>
   {{ object }}
 </p>
-<p><a href="{% url 'change_password' %}">Change password</a></p>
+<p>
+  <a href="{% url 'change_password' %}">Change password</a>
+</p>
 
 {% endblock %}
-
