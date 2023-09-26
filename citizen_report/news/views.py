@@ -24,7 +24,6 @@ class NewsPostDetail(generic.DetailView):
     template_name = 'detail_news.html'
 
 
-# @method_decorator(staff_member_required, name='dispatch')
 class NewsPostCreate(LoginRequiredMixin, generic.CreateView):
     form_class = NewsForm
     success_url = reverse_lazy("my_reports")
