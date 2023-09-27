@@ -1,16 +1,18 @@
-
-
 {% extends 'base.html' %}
 
 {% block title %}Sign Up{% endblock %}
 
 {% block content %}
-<h1>My profile</h1>
-<p>
-  {{ object }}
-</p>
-<p>
-  <a href="{% url 'change_password' %}">Change password</a>
-</p>
+<div>
+  <h1>My profile</h1>
+  <p>
+    {{ object }}
+  </p>
+  <div class="form-group">
+    <a href="{% url 'change_password' %}" class="btn btn-primary" >Change password</a>
+  </div>
+</div>
 
 {% endblock %}
+
+

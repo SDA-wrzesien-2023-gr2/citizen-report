@@ -13,6 +13,7 @@ from report.models import Report
 class NewsPostList(generic.ListView):
     model = NewsPost
     template_name = 'news.html'
+    paginate_by = 2
 
     def get_queryset(self, **kwargs):
         queryset = super().get_queryset(**kwargs)

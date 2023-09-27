@@ -4,7 +4,7 @@ from .models import NewsPost, NewsComment
 
 
 class NewsPostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'created_at')
+    list_display = ('title',  'report', 'created_at')
     list_filter = ("created_at",)
     search_fields = ['title', 'text']
 

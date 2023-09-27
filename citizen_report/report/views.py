@@ -1,17 +1,41 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views import generic
 
+from .filter import ReportFilter
 from .forms import ReportForm, UpdateReportForm
 from .models import Report
 from .utils import assign_clerk
 
 def home(request):
-    return render(request, 'home.html')
+    reports = Report.objects.order_by('-created_at')[:5]
+    return render(request, 'home.html', {'reports': reports})
+
+
+class SearchView(generic.ListView):
+    model = Report
+    template_name = 'search.html'
+    context_object_name = 'reports'
+    paginate_by = 10
+
+    def get_queryset(self, *args, **kwargs):
+        search = self.request.GET.get('search')
+        queryset = super().get_queryset(**kwargs)
+        if search:
+            queryset = queryset.filter(
+                Q(title__icontains=search) |
+                Q(text__icontains=search)
+            )
+        return queryset
 
 
 def list_reports(request):
-    reports = Report.objects.all()
-    return render(request, 'reports.html', {'reports': reports})
+    if request.POST.get('category'):
+        reports = ReportFilter(request.GET, queryset=Report.objects.filter(category__contains=request.POST.get('category')))
+    else:
+        reports = ReportFilter(request.GET, queryset=Report.objects.all())
+    return render(request, 'reports.html', {'filter': reports})
 
 
 @login_required
