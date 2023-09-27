@@ -8,7 +8,6 @@ from .forms import ReportForm, UpdateReportForm
 from .models import Report
 from .utils import assign_clerk
 
-
 def home(request):
     reports = Report.objects.order_by('-created_at')[:5]
     return render(request, 'home.html', {'reports': reports})

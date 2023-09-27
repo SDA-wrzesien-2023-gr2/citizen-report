@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'report',
     'authSystem',
+    'notifications',
     'news',
     'django_filters',
 ]

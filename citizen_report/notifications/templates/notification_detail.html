@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+	{{ notification.report }}
+{% endblock %}
+
+{% block content %}
+
+    <h1>{{ notification.report.title }}</h1>
+    <p>{{ notification.message }}</p>
+    <p>{{ notification.sent_at }}</p>
+
+
+{% endblock %}

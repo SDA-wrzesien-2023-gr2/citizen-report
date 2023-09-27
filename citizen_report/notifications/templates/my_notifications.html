@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	My notifications
+{% endblock title %}
+
+{% block content %}
+
+	{% for notification in notification_list %}
+
+        <h3>{{ notification.report }}</h3>
+        <a href="{% url 'notification_detail' notification.id %}">{{notification.report.title}}</a>
+        <p>{{ notification.message }}</p>
+        <p>{{ notification.sent_at }}</p>
+
+	{% endfor %}
+
+{##} TODO: dodanie obsługi paginacji - przyciski next i previous
+
+{% endblock content%}

@@ -1,11 +1,9 @@
-from django.contrib.auth import get_user_model
-from django.db import models
 from django.conf import settings
-from django.db.models import Count
+from django.db import models
 
 from .constants import Category, Status
 
-User = get_user_model()
+User = settings.AUTH_USER_MODEL
 
 
 class Report(models.Model):
@@ -24,4 +22,3 @@ class Report(models.Model):
 
     def __str__(self):
         return f'{self.title} | {self.updated_at}'
-
