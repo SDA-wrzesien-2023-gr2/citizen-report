@@ -20,6 +20,6 @@ class NotificationDetailView(DetailView):
 
 class NotificationListView(ListView):
     model = Notification
-    paginate_by = 10
+    paginate_by = 5
     template_name = 'my_notifications.html'
 
