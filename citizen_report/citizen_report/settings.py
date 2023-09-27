@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'report',
     'authSystem',
     'news',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
