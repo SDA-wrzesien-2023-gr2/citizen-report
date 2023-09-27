@@ -5,7 +5,6 @@ from .forms import ReportForm, UpdateReportForm
 from .models import Report
 from .utils import assign_clerk
 
-
 def home(request):
     return render(request, 'home.html')
 
