@@ -1,12 +1,7 @@
-from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, ListView
 
 from .models import Notification
 
-
-# Create your views here.
-
-# UNDER CONSTRUCTION!!!
 
 class NotificationDetailView(DetailView):
     model = Notification

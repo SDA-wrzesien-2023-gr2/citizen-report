@@ -22,14 +22,15 @@ def create_evaluation_notification(sender, created, instance, update_fields, **k
     notification = Notification(report=instance.report, user=instance.report.user, sent_at=timezone.now,
                                 message=message, is_read=False)
     notification.save()
-    print(notification)
+
+
 @receiver(post_save, sender=NewsComment)
 def create_comment_notification(sender, created, instance, update_fields, **kwargs):
     message = f'new comment to {instance.post} added!'
     notification = Notification(report=instance.post.report, user=instance.user, sent_at=timezone.now,
                                 message=message, is_read=False)
     notification.save()
-    print(notification)
+
 
 @receiver(post_save, sender=Notification)
 def send_email(sender, created, instance, update_fields, **kwargs):
