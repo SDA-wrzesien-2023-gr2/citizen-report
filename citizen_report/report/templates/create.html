@@ -64,12 +64,15 @@ tworzenie
             <p style="color: red;">{{ error }}</p>
         {% endif %}
 
-        {% if form %}
-            <form action="{% url 'create' %}" method="post">
-                {{ form }}
-                {% csrf_token %}
-                <button type="submit">Add report</button>
-            </form>
-        {% endif %}
+{% if form %}
+<form action="{% url 'create' %}" method="post">
+    <div class="form-group">
+        {{form.as_p}}
     </div>
+    {% csrf_token %}
+    <button type="submit">Add report</button>
+</form>
+{% endif %}
+
+
 {% endblock content %}

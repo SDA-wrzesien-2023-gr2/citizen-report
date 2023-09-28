@@ -7,11 +7,20 @@
 {% block content %}
 
 	{% for notification in notification_list %}
+        {% if notification.is_read %}
+            <h3>{{ notification.report }}</h3>
+            <a href="{% url 'notification_detail' notification.id %}">{{notification.report.title}}</a>
+            <p>{{ notification.message }}</p>
+            <p>{{ notification.sent_at }}</p>
+            {% else %}
+                <strong>
+                    <h3>{{ notification.report }}</h3>
+                    <a href="{% url 'notification_detail' notification.id %}">{{notification.report.title}}</a>
+                    <p>{{ notification.message }}</p>
+                    <p>{{ notification.sent_at }}</p>
+                </strong>
+        {% endif %}
 
-        <h3>{{ notification.report }}</h3>
-        <a href="{% url 'notification_detail' notification.id %}">{{notification.report.title}}</a>
-        <p>{{ notification.message }}</p>
-        <p>{{ notification.sent_at }}</p>
 
 	{% endfor %}
 

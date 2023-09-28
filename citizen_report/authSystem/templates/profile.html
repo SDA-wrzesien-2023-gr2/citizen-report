@@ -1,15 +1,14 @@
-
 {% extends 'base.html' %}
 
-{% block title %}Sign Up{% endblock title %}
+{% block title %}Sign Up{% endblock %}
 
 {% block content %}
-    <style>
+<style>
         body {
             background-color: grey;
         }
 
-        text2, link2 {
+        text2, .link2 {
             color: red;
             background-color: blue;
             padding: 20px;
@@ -17,11 +16,23 @@
             border: 3px solid black;
             max-width: 150px;
             margin-left: 20px;
-            margin-top: 20px; /* Dodaj odstęp z góry */
-            margin-bottom: 20px; /* Dodaj odstęp z dołu */
+            margin-top: 20px; /
+            margin-bottom: 20px;
         }
     </style>
+<div>
+  <text2>My profile</text2>
+  <p>
+    {{ object }}
+  </p>
+  <div class="link2">
+    <a href="{% url 'notifications_list' %}" class="btn btn-primary" >My notifications</a>
+  </div>
+  <div class="link2">
+    <a href="{% url 'change_password' %}" class="btn btn-primary" >Change password</a>
+  </div>
+</div>
 
-    <text2>My profile</text2>
-    <link2><a href="{% url 'change_password' %}">Change password</a></link2>
-{% endblock content %}
+{% endblock %}
+
+

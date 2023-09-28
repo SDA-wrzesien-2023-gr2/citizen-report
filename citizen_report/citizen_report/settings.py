@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'authSystem',
     'notifications',
     'news',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

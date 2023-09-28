@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Strona ze szczegółami
+{{report.title}}
 {% endblock title %}
 
 {% block content %}
@@ -83,7 +83,7 @@ Strona ze szczegółami
     {% else %}
         <h4>No news</h4>
     {% endif %}
-    <a href="{% url 'home' %}">Back to Home</a>
+    <a href="{{request.META.HTTP_REFERER|escape}}">Back</a>
 </p>
 
 {% endblock content %}

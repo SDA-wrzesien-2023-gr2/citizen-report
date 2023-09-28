@@ -23,7 +23,18 @@ raporty
   }
 </style>
 
+
+<form class="form-inline" method="GET" action="{% url 'search' %}">
+    <input class="form-control mt-2 mr-sm-2" type="search" placeholder="Search" name="search">
+    <button class="btn btn-outline-secondary my-2 my-sm-2" type="submit" value="Search">Search</button>
+</form>
+
+<form method="get">
+    {{ filter.form.as_p }}
+    <input type="submit" value="Filter" />
+</form>
 <h3>Reports:</h3>
+{% if filter.qs %}
 
 <table>
   <tr>
@@ -32,14 +43,19 @@ raporty
     <th>User</th>
   </tr>
 
-  {% for report in reports %}
+  {% for report in filter.qs %}
   <tr>
     <td><a href="{% url 'detail' report.id %}">{{ report.title }}</a></td>
     <td>{{ report.updated_at }}</td>
     <td>{{ report.user }}</td>
   </tr>
   {% endfor %}
-
 </table>
+
+{% else %}
+    <p>
+        No reports found
+    </p>
+{% endif %}
 
 {% endblock content %}
