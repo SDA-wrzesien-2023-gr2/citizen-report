@@ -1,16 +1,27 @@
 
-
 {% extends 'base.html' %}
 
-{% block title %}Sign Up{% endblock %}
+{% block title %}Sign Up{% endblock title %}
 
 {% block content %}
-<h1>My profile</h1>
-<p>
-  {{ object }}
-</p>
-<p>
-  <a href="{% url 'change_password' %}">Change password</a>
-</p>
+    <style>
+        body {
+            background-color: grey;
+        }
 
-{% endblock %}
+        text2, link2 {
+            color: red;
+            background-color: blue;
+            padding: 20px;
+            display: inline-block;
+            border: 3px solid black;
+            max-width: 150px;
+            margin-left: 20px;
+            margin-top: 20px; /* Dodaj odstęp z góry */
+            margin-bottom: 20px; /* Dodaj odstęp z dołu */
+        }
+    </style>
+
+    <text2>My profile</text2>
+    <link2><a href="{% url 'change_password' %}">Change password</a></link2>
+{% endblock content %}
