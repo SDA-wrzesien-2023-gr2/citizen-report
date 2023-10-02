@@ -12,6 +12,11 @@ raporty
     <button class="btn btn-outline-secondary my-2 my-sm-2" type="submit" value="Search">Search</button>
 </form>
 
+<form method="get">
+    {{ filter.form.as_p }}
+    <input type="submit" value="Filter" />
+</form>
+
 <h3>Search:</h3>
 {% if reports %}
 {% for report in reports %}
@@ -22,7 +27,7 @@ raporty
 {% endfor %}
 {% else %}
 <p>
-    No reports in category
+    0 result found
 </p>
 {% endif %}
 
