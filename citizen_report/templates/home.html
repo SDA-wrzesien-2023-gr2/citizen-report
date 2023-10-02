@@ -8,10 +8,10 @@
         <tr>
             <td>
                 <div style="padding:5px;">
-                    <form action="{% url 'reports' %}" method="post">
+                    <form action="{% url 'reports' %}" method="GET">
                         {% csrf_token %}
                         <label style="cursor:pointer;">
-                            <input style="display:none" type="submit" value=RBR name="category">
+                            <input style="display:none" type="submit" value=RBR name="search">
                             <span>
                                 Roads and bridges
                             </span>
@@ -21,10 +21,10 @@
             </td>
             <td>
                 <div style="padding:5px;">
-                    <form action="{% url 'reports' %}" method="post">
+                    <form action="{% url 'reports' %}" method="GET">
                         {% csrf_token %}
                         <label style="cursor:pointer;">
-                            <input style="display:none"  type="submit" value=SWS name="category">
+                            <input style="display:none"  type="submit" value=SWS name="search">
                             <span>
                                 Sewer and waterworks
                             </span>
@@ -34,10 +34,10 @@
             </td>
             <td>
                 <div style="padding:5px;">
-                    <form action="{% url 'reports' %}" method="post">
+                    <form action="{% url 'reports' %}" method="GET">
                         {% csrf_token %}
                         <label style="cursor:pointer;">
-                            <input style="display:none"  type="submit" value=POW name="category">
+                            <input style="display:none"  type="submit" value=POW name="search">
                             <span>
                                 Power supply
                             </span>
@@ -49,10 +49,10 @@
         <tr>
             <td>
                 <div style="padding:5px;">
-                    <form action="{% url 'reports' %}" method="post">
+                    <form action="{% url 'reports' %}" method="GET">
                         {% csrf_token %}
                         <label style="cursor:pointer;">
-                            <input style="display:none"  type="submit" value=TEL name="category">
+                            <input style="display:none"  type="submit" value=TEL name="search">
                             <span>
                                 Telecommunication
                             </span>
@@ -62,10 +62,10 @@
             </td>
             <td>
                 <div style="padding:5px;">
-                    <form action="{% url 'reports' %}" method="post">
+                    <form action="{% url 'reports' %}" method="GET">
                         {% csrf_token %}
                         <label style="cursor:pointer;">
-                            <input style="display:none"  type="submit" value=GAR name="category">
+                            <input style="display:none"  type="submit" value=GAR name="search">
                             <span>
                                 Garbage disposal
                             </span>
@@ -75,10 +75,10 @@
             </td>
             <td>
                 <div style="padding:5px;">
-                    <form action="{% url 'reports' %}" method="post">
+                    <form action="{% url 'reports' %}" method="GET">
                         {% csrf_token %}
                         <label style="cursor:pointer;">
-                            <input style="display:none"  type="submit" value=CTR name="category">
+                            <input style="display:none"  type="submit" value=CTR name="search">
                             <span>
                                 City transport
                             </span>
@@ -90,10 +90,10 @@
         <tr>
             <td>
                 <div style="padding:5px;">
-                    <form action="{% url 'reports' %}" method="post">
+                    <form action="{% url 'reports' %}" method="GET">
                         {% csrf_token %}
                         <label style="cursor:pointer;">
-                            <input style="display:none"  type="submit" value=HTH name="category">
+                            <input style="display:none"  type="submit" value=HTH name="search">
                             <span>
                                 Healthcare
                             </span>
@@ -103,10 +103,10 @@
             </td>
             <td>
                 <div style="padding:5px;">
-                    <form action="{% url 'reports' %}" method="post">
+                    <form action="{% url 'reports' %}" method="GET">
                         {% csrf_token %}
                         <label style="cursor:pointer;">
-                            <input style="display:none"  type="submit" value=EDU name="category">
+                            <input style="display:none"  type="submit" value=EDU name="search">
                             <span>
                                 Education
                             </span>
@@ -118,10 +118,10 @@
         <tr>
             <td>
                 <div style="padding:5px;">
-                    <form action="{% url 'reports' %}" method="post">
+                    <form action="{% url 'reports' %}" method="GET">
                         {% csrf_token %}
                         <label style="cursor:pointer;">
-                            <input style="display:none"  type="submit" value=GAS name="category">
+                            <input style="display:none"  type="submit" value=GAS name="search">
                             <span>
                                 Gasworks
                             </span>
@@ -131,10 +131,10 @@
             </td>
             <td>
                 <div style="padding:5px;">
-                    <form action="{% url 'reports' %}" method="post">
+                    <form action="{% url 'reports' %}" method="GET">
                         {% csrf_token %}
                         <label style="cursor:pointer;">
-                            <input style="display:none"  type="submit" value=SAF name="category">
+                            <input style="display:none"  type="submit" value=SAF name="search">
                             <span>
                                 Public safety
                             </span>
@@ -148,7 +148,7 @@
 
 <h3>Last 5 reports:</h3>
 {% for report in reports %}
-<div>
+<div class="flex-container">
     <a href="{% url 'detail' report.id %}">{{report.title}}</a> - {{report.user.username}}
     <p>
         {{report.created_at}}
