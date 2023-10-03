@@ -35,6 +35,13 @@
         <ul class="nav nav-pills navbar-right">
             {% if user.is_authenticated %}
                 <li class="nav-item">
+                    <a href="{% url 'notifications_list' %}" class="btn btn-primary" >Notifications
+                        {% if notifications.count %}
+                        <span class="badge badge-light">{{notifications.count}}</span>
+                        {% endif %}
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link"  href="{% url 'profile' %}">{{user.username}}</a>
                 </li>
                 <li class="nav-item">

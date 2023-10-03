@@ -29,7 +29,7 @@
             </li>
         {% endif %}
         <li class="page-item active">
-            <a class="page-link" href="#">{{ page_obj.number }} <span class="sr-only">(current)</span></a>
+            <a class="page-link" href="">{{ page_obj.number }} <span class="sr-only">(current)</span></a>
         </li>
         {% if page_obj.has_next %}
             <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a></li>
@@ -43,5 +43,6 @@
         {% endif %}
     </ul>
 </nav>
+
 
 {% endblock %}
