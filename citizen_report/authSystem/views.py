@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
@@ -36,6 +37,7 @@ class PasswordChange(generic.FormView):
 
     def form_valid(self, form):
         form.save()
+        messages.success(self.request, 'Your password has been changed.')
         update_session_auth_hash(self.request, form.user)
         return super(PasswordChange, self).form_valid(form)
 
