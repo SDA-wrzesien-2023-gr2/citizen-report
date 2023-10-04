@@ -6,7 +6,7 @@ Add report
 
 {% block content %}
 
-<h3>Report an incident</h3>
+<h3>New report</h3>
 
 {% if error %}
 {{error}}
@@ -14,11 +14,11 @@ Add report
 
 {% if form %}
 <form action="{% url 'create' %}" method="post">
-    <div class="form-group">
+    <div class="form-group row">
         {{form.as_p}}
     </div>
     {% csrf_token %}
-    <button type="submit">Add report</button>
+    <button type="submit">Send report</button>
 </form>
 {% endif %}
 

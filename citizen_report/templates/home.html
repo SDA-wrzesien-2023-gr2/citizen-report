@@ -3,6 +3,14 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-info" role="alert">
+        {{message}}
+    </div>
+    {% endfor %}
+{% endif %}
+
 <section>
     <table>
         <tr>
@@ -148,7 +156,7 @@
 
 <h3>Last 5 reports:</h3>
 {% for report in reports %}
-<div class="flex-container">
+<div class="container-fluid">
     <a href="{% url 'detail' report.id %}">{{report.title}}</a> - {{report.user.username}}
     <p>
         {{report.created_at}}

@@ -10,6 +10,11 @@
     <h1>{{ notification.report.title }}</h1>
     <p>{{ notification.message }}</p>
     <p>{{ notification.sent_at }}</p>
+    {% if notification.report %}
+        <div>
+            <a href="{% url 'detail' notification.report.id %}" class="btn btn-primary">Check it out!</a>
+        </div>
+    {% endif %}
 
 
 {% endblock %}
