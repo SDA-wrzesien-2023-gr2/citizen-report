@@ -6,20 +6,53 @@ Add report
 
 {% block content %}
 
-<h3>New report</h3>
 
 {% if error %}
 {{error}}
 {% endif %}
 
+
+
 {% if form %}
-<form action="{% url 'create' %}" method="post">
-    <div class="form-group row">
-        {{form.as_p}}
-    </div>
-    {% csrf_token %}
-    <button type="submit">Send report</button>
-</form>
+<div class="container">
+    <h1 class="text-center">
+        <p class="text-uppercase font-weight-bold font-italic">new report</p>
+    </h1>
+    <form action="{% url 'create' %}" method="post">
+        <div class="form-group row">
+            <label for="inputCategory" class="col-sm-2 col-form-label">Category</label>
+            <div class="col-sm-10">
+                <select id="inputCategory" class="form-control" name="category" required>
+                    {% for value,text in form.category.field.choices  %}
+                        <option value="{{ value }}">{{ text }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputTitle" class="col-sm-2 col-form-label">Title</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputTitle" placeholder="Title" name="title" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="textarea">Text</label>
+            <textarea class="form-control" id="textarea" rows="5" name="text" placeholder="Describe your problem" required></textarea>
+        </div>
+        <div class="form-group">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="validatedCustomFile" name="image">
+                <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+            </div>
+        </div>
+        {% csrf_token %}
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary">Send report</button>
+            </div>
+        </div>
+    </form>
+</div>
 {% endif %}
 
 
