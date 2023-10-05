@@ -1,5 +1,6 @@
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
@@ -36,9 +37,11 @@ class NewsPostCreate(LoginRequiredMixin, generic.CreateView):
         return super(NewsPostCreate, self).form_valid(form)
 
 
-class NewsCommentCreate(LoginRequiredMixin, generic.CreateView):
+class NewsCommentCreate(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     form_class = NewsCommentForm
     template_name = "add_comment_to_news.html"
+    success_message = "Your comment is being moderated."
+
 
     def form_valid(self, form):
         form.instance.post = get_object_or_404(NewsPost, pk=self.kwargs['pk'])

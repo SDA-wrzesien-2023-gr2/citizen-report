@@ -7,6 +7,13 @@
 
 {% block content %}
 
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-info" role="alert">
+    {{message}}
+</div>
+{% endfor %}
+{% endif %}
 
 <h1>{{newspost.title}}</h1>
 <p>{{ newspost.clerk }} | {{ newspost.created_at}} </p>
