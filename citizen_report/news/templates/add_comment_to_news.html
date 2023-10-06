@@ -1,38 +1,22 @@
 {% extends 'base.html' %}
+{% load static %}
+
 
 {% block content %}
-<h1>New comment</h1>
-<form method="POST" >
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Send</button>
-</form>
 
 <div class="p-3 container">
     <div class="p-3 mb-2 bg-white text-dark rounded border border-dark">
-        <h1 class="text-center">
+        <h3 class="text-center">
             <p class="text-uppercase font-weight-bold font-italic">New comment</p>
-        </h1>
-        <div class="container">
-            <div class="col-md-2 mx-auto">
-                <img src="{% static 'news/news-problem-icon3.jpg' %}" class="img-fluid">
-            </div>
-        </div>
+        </h3>
         <form method="post">
-            <div class="form-group row">
             <div class="form-group">
-                <label for="textarea">Text</label>
                 <textarea class="form-control" id="textarea" rows="6" name="text" placeholder="Write your comment to post" required></textarea>
             </div>
             {% csrf_token %}
             <div class="form-group row">
                 <div class="col-sm-12 text-right">
                     <button type="submit" class="btn btn-primary">Send comment</button>
-                </div>
-            </div>
-            <div class="container">
-                <div class="col-md-2 mx-auto">
-                    <img src="{% static 'news/news-problem-icon3.jpg' %}" class="img-fluid">
                 </div>
             </div>
         </form>

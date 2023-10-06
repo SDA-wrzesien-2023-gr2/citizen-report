@@ -3,13 +3,15 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-{% if messages %}
-    {% for message in messages %}
-    <div class="alert alert-info" role="alert">
-        {{message}}
-    </div>
-    {% endfor %}
-{% endif %}
+<div class="p-3 container-fluid ">
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-info" role="alert">
+            {{message}}
+        </div>
+        {% endfor %}
+    {% endif %}
+</div>
 
 <section>
     <table>
