@@ -3,16 +3,60 @@
 {% block title %}Sign Up{% endblock %}
 
 {% block content %}
-<div class="container">
-  <h1>Sign Up</h1>
-  <form method="post">
-    {% csrf_token %}
-    <div class="form-group">
-      {{ form.as_p }}
+
+
+<div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-content ">
+    <div class="modal-header d-flex justify-content-center">
+      <div class="form-title text-center">
+        <h2 class="fw-bold mb-4">Sign Up</h2>
+        {% if form.errors %}
+        <div class="form-group mb-2">
+          {% for field in form %}
+          {% for error in field.errors %}
+          <div class="alert alert-danger" role="alert">
+            <strong>{{ error|escape }}</strong>
+          </div>
+          {% endfor %}
+          {% endfor %}
+          {% for error in form.non_field_errors %}
+          <div class="alert alert-danger" role="alert">
+            <strong>{{ error|escape }}</strong>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-muted mb-2">Please fill in this form to create an account!</p>
+        {% endif %}
+      </div>
     </div>
-    <div class="form-group">
-      <button class="btn btn-primary"  type="submit">Sign Up</button>
+    <div class="modal-body">
+      <div class="d-flex flex-column text-center">
+        <form method="post">
+          <div class="form-group">
+            <input type="email" class="form-control form-control-lg" id="email" placeholder="Email Address" name="email" >
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control form-control-lg" id="username" placeholder="Username" name="username" >
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control form-control-lg" id="password1" placeholder="Password" name="password1">
+            <small id="passwordHelpBlock" class="form-text text-muted">
+              Your password must be at least 8 characters long, contain letters and numbers, can’t be entirely numeric.
+            </small>
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control form-control-lg" id="password2" placeholder="Confirm Password" name="password2">
+          </div>
+          {% csrf_token %}
+          <button type="submit" class="btn btn-info btn-block btn-round">Sign up</button>
+        </form>
+      </div>
     </div>
-  </form>
+    <div class="modal-footer d-flex justify-content-center">
+      <div class="form-group">Already have an account? <a href="{% url 'login' %}" class="text-info"> Login</a></div>
+    </div>
+  </div>
 </div>
+
 {% endblock %}

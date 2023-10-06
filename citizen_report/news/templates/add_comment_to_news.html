@@ -1,17 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}Add comment{% endblock %}
+
 
 {% block content %}
 
-<div class="p-3 container">
-    <div class="p-3 mb-2 bg-white text-dark rounded border border-dark">
+<div class="p-3 mb-4 container">
+    <div class="p-3 mb-4 bg-white text-dark rounded border border-dark col-sm-8 mx-auto">
         <h3 class="text-center">
             <p class="text-uppercase font-weight-bold font-italic">New comment</p>
         </h3>
         <form method="post">
-            <div class="form-group">
-                <textarea class="form-control" id="textarea" rows="6" name="text" placeholder="Write your comment to post" required></textarea>
+            <div class="form-group ">
+                <textarea class="form-control" id="textarea" rows="6" name="text" placeholder="Write your comment" required></textarea>
             </div>
             {% csrf_token %}
             <div class="form-group row">
@@ -23,7 +25,7 @@
     </div>
 </div>
 
-<div class="form-group">
+<div class="form-group ">
     <a href="{{request.META.HTTP_REFERER|escape}}" class="btn btn-secondary">Back</a>
 </div>
 
