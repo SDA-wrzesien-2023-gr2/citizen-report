@@ -18,7 +18,7 @@ class ReportListView(FilterView):
     model = Report
     template_name = 'reports.html'
     context_object_name = 'reports'
-    paginate_by = 5
+    paginate_by = 3
     filterset_class = ReportFilter
 
     def get_queryset(self, *args, **kwargs):
