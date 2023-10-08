@@ -30,8 +30,13 @@
     {% else %}
         <h4>No news</h4>
     {% endif %}
-    <a href="{{request.META.HTTP_REFERER|escape}}">Back</a>
 </p>
+
+<div class="fixed-bottom d-flex p-3">
+    <div class="form-group">
+        <a href="{{request.META.HTTP_REFERER|escape}}" class="btn btn-secondary">Back</a>
+    </div>
+</div>
 
 
 {% endblock content %}
