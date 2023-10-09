@@ -1,10 +1,11 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
 from django_filters.views import FilterView
 
-from .filter import ReportFilter
+from .filter import ReportFilter, MyReportFilter
 from .forms import ReportForm, UpdateReportForm
 from .models import Report
 from .utils import assign_clerk
@@ -33,13 +34,34 @@ class ReportListView(FilterView):
         return queryset
 
 
-@login_required
-def my_reports(request):
-    if request.user.is_staff:
-        reports = Report.objects.filter(clerk=request.user).all()
-    else:
-        reports = Report.objects.filter(user=request.user).all()
-    return render(request, 'my_reports.html', {'reports': reports})
+class MyReportListView(LoginRequiredMixin, FilterView):
+    model = Report
+    template_name = 'my_reports.html'
+    context_object_name = 'reports'
+    paginate_by = 2
+    filterset_class = MyReportFilter
+
+    def get_queryset(self, *args, **kwargs):
+        user = self.request.user
+        queryset = super().get_queryset(**kwargs)
+        if user.is_staff:
+            queryset = queryset.filter(
+                clerk=user
+            )
+        else:
+            queryset = queryset.filter(
+                user=user
+            )
+        return queryset
+
+# to delete
+# @login_required
+# def my_reports(request):
+#     if request.user.is_staff:
+#         reports = Report.objects.filter(clerk=request.user).filter(~Q(status="RJ")).all()
+#     else:
+#         reports = Report.objects.filter(user=request.user).all()
+#     return render(request, 'my_reports.html', {'reports': reports})
 
 
 @login_required

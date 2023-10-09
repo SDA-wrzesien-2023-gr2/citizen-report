@@ -16,6 +16,6 @@ class NotificationDetailView(LoginRequiredMixin, DetailView):
 
 class NotificationListView(LoginRequiredMixin, ListView):
     model = Notification
-    paginate_by = 5
+    paginate_by = 6
     template_name = 'my_notifications.html'
 

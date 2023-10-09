@@ -10,7 +10,7 @@ from notifications.models import Notification
 
 @receiver(post_save, sender=Report)
 def create_report_notification(sender, created, instance, update_fields, **kwargs):
-    message = f'new report {instance.title} added!' if created else f'report status or fields:{update_fields} changed'
+    message = f'New report {instance.title} has been added!' if created else f'Report status has been changed'
     notification = Notification(report=instance, user=instance.user,
                                 message=message, is_read=False)
     notification.save()
@@ -18,7 +18,7 @@ def create_report_notification(sender, created, instance, update_fields, **kwarg
 
 @receiver(post_save, sender=NewsPost)
 def create_evaluation_notification(sender, created, instance, update_fields, **kwargs):
-    message = f'new evaluation {instance.title} added!'
+    message = f'New post has been added to {instance.title}!'
     notification = Notification(report=instance.report, user=instance.report.user,
                                 message=message, is_read=False)
     notification.save()
@@ -26,7 +26,7 @@ def create_evaluation_notification(sender, created, instance, update_fields, **k
 
 @receiver(post_save, sender=NewsComment)
 def create_comment_notification(sender, created, instance, update_fields, **kwargs):
-    message = f'new comment to {instance.post} added!'
+    message = f'New comment has been added to {instance.post.title}!'
     notification = Notification(report=instance.post.report, user=instance.user,
                                 message=message, is_read=False)
     notification.save()

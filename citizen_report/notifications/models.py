@@ -13,6 +13,9 @@ class Notification(models.Model):
     message = models.CharField(max_length=200)
     is_read = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ['-sent_at']
+
     def __str__(self):
         return self.message
 
