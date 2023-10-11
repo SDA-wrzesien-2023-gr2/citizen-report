@@ -7,7 +7,7 @@ My reports
 {% block content %}
 
 <div class="container">
-    <div class="p-3 my-3 mb-2 bg-white text-dark rounded border border-dark ">
+    <div class="p-3 my-3 mb-2 bg-white text-dark rounded border border-dark" style="height: 760px">
         <div class="row justify-content-center">
                 <div class="col-sm-6 my-4">
                     <h2 class="text-center">
@@ -40,19 +40,19 @@ My reports
                     {% for report in reports %}
                         {% if user.is_staff %}
                             <div class="col-md-6 mx-auto">
-                                <div class="card my-3">
+                                <div class="card my-4">
                                     <h3 class="card-header">Status: {{report.get_status_display}}</h3>
                                     <div class="card-body">
                                         <h2 class="card-title">{{report.title}}</h2>
-                                        <p class="card-text"><small class="text-muted">Updated: {{report.updated_at}}</small></p>
-                                        <p class="card-text"><small class="text-muted">Submited: {{report.created_at}}</small></p>
+                                        <p class="card-text"><small class="text-muted">Update date: {{report.updated_at}}</small></p>
+                                        <p class="card-text"><small class="text-muted">Submission date: {{report.created_at}}</small></p>
                                         <a href="{% url 'update_report' report.id %}" class="btn btn-primary">Update status</a>
                                     </div>
                                 </div>
                             </div>
                         {% else %}
                             <div class="col-md-6 mx-auto">
-                                <div class="card my-3">
+                                <div class="card my-4">
                                     <h3 class="card-header">Status: {{report.get_status_display}}</h3>
                                     <div class="card-body">
                                         <h2 class="card-title">{{report.title}}</h2>

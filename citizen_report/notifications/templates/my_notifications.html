@@ -9,7 +9,7 @@
 <div class="container">
     {% for notification in notification_list %}
         {% if notification.is_read %}
-            <div class="card mb-3 my-3">
+            <div class="card mb-3 my-4">
                 <div class="card-body">
                     <a class="card-link text-info" href="{% url 'notification_detail' notification.id %}">
                         <h5 class="card-title text-uppercase">
@@ -20,7 +20,7 @@
                 </div>
             </div>
         {% else %}
-            <div class="card border-dark  mb-3 my-3">
+            <div class="card border-dark  mb-3 my-4">
                 <div class="card-body">
                     <a class="card-link text-info" href="{% url 'notification_detail' notification.id %}">
                         <h5 class="card-title text-uppercase font-weight-bold">

@@ -10,6 +10,7 @@ from .forms import ReportForm, UpdateReportForm
 from .models import Report
 from .utils import assign_clerk
 
+
 def home(request):
     reports = Report.objects.order_by('-created_at')[:5]
     return render(request, 'home.html', {'reports': reports})
@@ -19,7 +20,7 @@ class ReportListView(FilterView):
     model = Report
     template_name = 'reports.html'
     context_object_name = 'reports'
-    paginate_by = 6
+    paginate_by = 4
     filterset_class = ReportFilter
 
     def get_queryset(self, *args, **kwargs):
@@ -100,7 +101,7 @@ def update_status(request, report_id):
             form = UpdateReportForm(request.POST, instance=report)
             if form.is_valid():
                 report.save()
-                return redirect('reports')
+                return redirect('my_reports')
             else:
                 error = 'wrong data in form'
                 return render(request, 'update_report.html', {'form': form, 'report': report, 'error': error})

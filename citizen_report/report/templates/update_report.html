@@ -8,8 +8,8 @@ Strona ze szczegółami
 
 {% block content %}
 
-<div class="p-3 container ">
-    <div class="p-3 mb-2 bg-white text-dark rounded border border-dark">
+<div class="container">
+    <div class="p-3 my-3 mb-2 bg-white text-dark rounded border border-dark" style="height: 760px">
         <div class="media">
             <div class="col-md-2 mx-auto">
                 <img src="{% static 'report/report-problem-icon3.jpg' %}" class="img-fluid">
@@ -23,16 +23,16 @@ Strona ze szczegółami
                 <h3 class="text-start">
                     <p class="font-weight-bold font-italic">Category - {{report.get_category_display}}</p>
                 </h3>
-                <p class="card-text">Submitted by: {{report.user.username}}</p>
-                <p class="card-text"><small class="text-muted">Update date: {{report.updated_at}} | Submission date: {{report.created_at}}</small></p>
+                <p class="text-start">Submitted by: {{report.user.username}}</p>
+                <p class="text-start"><small class="text-muted">Update date: {{report.updated_at}} | Submission date: {{report.created_at}}</small></p>
             </div>
             <div class="col-sm-6">
                 {% if report.image %}}
-                    <img src="{{report.image.url}}" class="card-img-top"  alt="Report image">
+                    <img src="{{report.image.url}}" class="rounded mx-auto d-block"  alt="Report image">
                 {% endif %}
             </div>
         </div>
-        <div class="row p-4 m-4">
+        <div class="row m-4">
             <div class="col-md-10 mx-auto">
                 <p class="font-italic">{{report.text}}</p>
             </div>
@@ -40,25 +40,30 @@ Strona ze szczegółami
         <form method="post">
             <div class="col-md-8 mx-auto">
                 <div class="form-group row m-4">
-                    <label for="inputCategory" class="col-sm-2 col-form-label">Status</label>
+                    <label for="inputStatus" class="col-sm-2 col-form-label">Status:</label>
                     <div class="col-sm-9">
-                        <select id="inputCategory" class="form-control" name="category" required>
+                        <select id="inputStatus" class="form-control" name="status" required>
+                            <option value="{{report.status}}">{{ report.get_status_display }}</option>
                             {% for value,text in form.status.field.choices  %}
-                            <option value="{{ value }}">{{ text }}</option>
+                                {% if report.status not in value %}
+                                    <option value="{{ value }}">{{ text }}</option>
+                                {% endif %}
                             {% endfor %}
                         </select>
                     </div>
                 </div>
             </div>
             {% csrf_token %}
-            <div class="form-group row m-4">
+            <div class="form-group row m-2">
                 <div class="col-sm-12 text-right">
                     <button type="submit" class="btn btn-primary">Change status</button>
                 </div>
             </div>
         </form>
-        <div class="row m-4">
-            <a href="{% url 'create_news' report.id %}" class="btn btn-secondary">Create post</a>
+        <div class="form-group row m-2">
+            <div class="col-sm-2 text-middle">
+                <a href="{% url 'create_news' report.id %}" class="btn btn-dark">Create post</a>
+            </div>
         </div>
         <div class="media">
             <div class="col-md-2 mx-auto">

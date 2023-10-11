@@ -19,23 +19,24 @@ Reports
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-2 my-4">
-            <div class="p-3 mb-2 bg-white text-dark rounded border border-dark">
+        <div class="col-md-2 my-4">
+            <div class="p-3 my-4 mb-2 bg-white text-dark rounded border border-dark">
                 <h1 class="text-center">
                     <p class="text-uppercase font-weight-bold font-italic">Filter</p>
                 </h1>
+                <hr class="my-4">
                 <form method="get">
                     <div class="form-group my-4 mr-sm-2">
-                        <label for="inputCategory">Category</label>
-                        <select id="inputCategory" class="form-control" name="category">
+                        <label class="my-2" for="inputCategory">Category</label>
+                        <select id="inputCategory" class="form-control my-2" name="category">
                             {% for value,text in filter.form.category.field.choices  %}
                             <option value="{{ value }}">{{ text }}</option>
                             {% endfor %}
                         </select>
                     </div>
                     <div class="form-group my-4 mr-sm-2">
-                        <label for="inputStatus">Status</label>
-                        <select id="inputStatus" class="form-control" name="status">
+                        <label class="my-2" for="inputStatus">Status</label>
+                        <select id="inputStatus" class="form-control my-2" name="status">
                             {% for value,text in filter.form.status.field.choices  %}
                             <option value="{{ value }}">{{ text }}</option>
                             {% endfor %}
@@ -44,36 +45,39 @@ Reports
                     {% csrf_token %}
                     <div class="form-group my-4 mr-sm-2">
                         <div class="text-right">
-                            <button type="submit" class="btn btn-primary">Filter</button>
+                            <button type="submit" class="btn btn-dark">Filter</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
-        <div class="col-sm-8 align-self-center">
             {% if reports %}
-                <div class="row justify-content-start">
-                    {% for report in reports %}
-                            <div class="col-sm-4">
-                                <div class="card my-4">
+                <div class="col-sm-8">
+                    <div class="row">
+                        {% for report in reports %}
+                                <div class="col-sm-6">
+                                    <div class="card my-4">
 
-                                    <h5 class="card-header">Status: {{report.get_status_display}}</h5>
-                                    <div class="card-body">
-                                        <h3 class="card-title">{{report.title}}</h3>
-                                        <p class="card-text">Category: {{report.get_category_display}}</p>
-                                        <a href="{% url 'detail' report.id %}" class="btn btn-primary">Check report</a>
-                                    </div>
-                                    <div class="card-footer text-muted">
-                                        <p class="card-text">{{report.updated_at}}</p>
+                                        <h5 class="card-header">Status: {{report.get_status_display}}</h5>
+                                        <div class="card-body">
+                                            <h3 class="card-title">{{report.title}}</h3>
+                                            <p class="card-text">Category: {{report.get_category_display}}</p>
+                                            <a href="{% url 'detail' report.id %}" class="btn btn-primary">Check report</a>
+                                        </div>
+                                        <div class="card-footer text-muted">
+                                            <p class="card-text">{{report.updated_at}}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
                 </div>
             {% else %}
-                <div class="row justify-content-center">
-                    <div class="badge badge-danger text-wrap" >
-                        <h2 class="text-uppercase font-weight-bold align-center">0 result found</h2>
+                <div class="col-sm-8 align-self-center">
+                    <div class="row justify-content-center">
+                        <div class="badge badge-danger text-wrap" >
+                            <h1 class="text-uppercase font-weight-bold align-center">0 result found</h1>
+                        </div>
                     </div>
                 </div>
             {% endif %}
