@@ -9,11 +9,14 @@ from .filter import ReportFilter, MyReportFilter
 from .forms import ReportForm, UpdateReportForm
 from .models import Report
 from .utils import assign_clerk
+from news.models import NewsPost
 
 
 def home(request):
-    reports = Report.objects.order_by('-created_at')[:5]
-    return render(request, 'home.html', {'reports': reports})
+    reports = Report.objects.order_by('-created_at')
+    news_list = NewsPost.objects.order_by('-created_at')
+
+    return render(request, 'home.html', {'reports': reports, 'news_list':news_list})
 
 
 class ReportListView(FilterView):
