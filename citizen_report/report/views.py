@@ -1,7 +1,10 @@
+from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
 from django.views import generic
 from django_filters.views import FilterView
 
@@ -10,6 +13,8 @@ from .forms import ReportForm, UpdateReportForm
 from .models import Report
 from .utils import assign_clerk
 from news.models import NewsPost
+
+User = get_user_model()
 
 
 def home(request):
@@ -58,33 +63,35 @@ class MyReportListView(LoginRequiredMixin, FilterView):
             )
         return queryset
 
-# to delete
+
+class ReportCreate(LoginRequiredMixin, generic.CreateView):
+    form_class = ReportForm
+    success_url = reverse_lazy("reports")
+    template_name = "create.html"
+
+    def form_valid(self, form):
+        available_clerks = User.objects.filter(department=form.instance.category).filter(is_staff=True).all()
+        form.instance.clerk = available_clerks.annotate(num_reports=Count("assigned_reports")).order_by("num_reports").first()
+        form.instance.user = self.request.user
+        return super(ReportCreate, self).form_valid(form)
+
 # @login_required
-# def my_reports(request):
-#     if request.user.is_staff:
-#         reports = Report.objects.filter(clerk=request.user).filter(~Q(status="RJ")).all()
+# def create(request):
+#     if request.method == 'GET':
+#         return render(request, 'create.html', {'form': ReportForm()})
+#     elif request.method == 'POST':
+#         form = ReportForm(request.POST)
+#         if form.is_valid():
+#             report = form.save(commit=False)
+#             report.user = request.user
+#             assign_clerk(report)
+#             report.save()
+#             return redirect('reports')
+#         else:
+#             error = 'wrong data in form'
+#             return render(request, 'create.html', {'form': ReportForm(request.POST), 'error': error})
 #     else:
-#         reports = Report.objects.filter(user=request.user).all()
-#     return render(request, 'my_reports.html', {'reports': reports})
-
-
-@login_required
-def create(request):
-    if request.method == 'GET':
-        return render(request, 'create.html', {'form': ReportForm()})
-    elif request.method == 'POST':
-        form = ReportForm(request.POST)
-        if form.is_valid():
-            report = form.save(commit=False)
-            report.user = request.user
-            assign_clerk(report)
-            report.save()
-            return redirect('reports')
-        else:
-            error = 'wrong data in form'
-            return render(request, 'create.html', {'form': ReportForm(request.POST), 'error': error})
-    else:
-        return render(request, "405.html", status=405)
+#         return render(request, "405.html", status=405)
 
 
 def detail(request, report_id):
