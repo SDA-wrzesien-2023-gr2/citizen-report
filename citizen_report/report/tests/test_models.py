@@ -35,3 +35,8 @@ class ReportTest(TestCase):
     def test_report_category(self):
         report = Report.objects.get(id=self.report.id)
         self.assertEqual(report.category, 'POW')
+
+    def test_object_string(self):
+        report = Report.objects.get(id=self.report.id)
+        expected_object_name = f'{report.title} | {report.updated_at}'
+        self.assertEqual(str(report), expected_object_name)

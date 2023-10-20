@@ -44,6 +44,7 @@ class ReportListView(FilterView):
 
 
 class MyReportListView(LoginRequiredMixin, FilterView):
+    login_url = 'login'
     model = Report
     template_name = 'my_reports.html'
     context_object_name = 'reports'
@@ -65,13 +66,23 @@ class MyReportListView(LoginRequiredMixin, FilterView):
 
 
 class ReportCreate(LoginRequiredMixin, generic.CreateView):
+    login_url = 'login'
     form_class = ReportForm
     success_url = reverse_lazy("reports")
     template_name = "create.html"
 
+    def get_form_kwargs(self):
+        kwargs = super(ReportCreate, self).get_form_kwargs()
+        if hasattr(self.request, 'clerk'):
+            kwargs['clerk'] = self.request.clerk
+        return kwargs
+
     def form_valid(self, form):
-        available_clerks = User.objects.filter(department=form.instance.category).filter(is_staff=True).all()
-        form.instance.clerk = available_clerks.annotate(num_reports=Count("assigned_reports")).order_by("num_reports").first()
+        if self.kwargs.get('clerk'):
+            form.instance.clerk = self.kwargs.get('clerk')
+        else:
+            available_clerks = User.objects.filter(department=form.instance.category).filter(is_staff=True).all()
+            form.instance.clerk = available_clerks.annotate(num_reports=Count("assigned_reports")).order_by("num_reports").first()
         form.instance.user = self.request.user
         return super(ReportCreate, self).form_valid(form)
 
