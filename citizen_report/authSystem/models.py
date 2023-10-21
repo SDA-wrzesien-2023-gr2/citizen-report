@@ -8,7 +8,7 @@ from .const import Department
 
 class UserManager(BaseUserManager):
 
-    def _create_user(self, email, username, password, is_staff, is_superuser, **extra_fields):
+    def _create_user(self, email, username, password, **extra_fields):
         if not email:
             raise ValueError('Users must have an email address')
         if not username:
@@ -19,9 +19,7 @@ class UserManager(BaseUserManager):
         user = self.model(
             email=email,
             username=username,
-            is_staff=is_staff,
             is_active=True,
-            is_superuser=is_superuser,
             date_joined=now,
             **extra_fields
         )
@@ -34,8 +32,6 @@ class UserManager(BaseUserManager):
             email,
             username,
             password,
-            is_staff=False,
-            is_superuser=False,
             **extra_fields
         )
 

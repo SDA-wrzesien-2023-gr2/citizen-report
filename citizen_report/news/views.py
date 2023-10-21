@@ -27,6 +27,7 @@ class NewsPostDetail(generic.DetailView):
 
 
 class NewsPostCreate(LoginRequiredMixin, generic.CreateView):
+    login_url = 'login'
     form_class = NewsForm
     success_url = reverse_lazy("my_reports")
     template_name = "create_news.html"
@@ -38,10 +39,10 @@ class NewsPostCreate(LoginRequiredMixin, generic.CreateView):
 
 
 class NewsCommentCreate(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
+    login_url = 'login'
     form_class = NewsCommentForm
     template_name = "add_comment_to_news.html"
     success_message = "Your comment is being moderated."
-
 
     def form_valid(self, form):
         form.instance.post = get_object_or_404(NewsPost, pk=self.kwargs['pk'])

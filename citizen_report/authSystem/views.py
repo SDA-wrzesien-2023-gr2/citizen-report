@@ -28,6 +28,7 @@ class LogIn(SuccessMessageMixin, LoginView):
 
 
 class UserView(LoginRequiredMixin, generic.DetailView):
+    login_url = 'login'
     template_name = 'profile.html'
 
     def get_object(self, **kwargs):
@@ -35,6 +36,7 @@ class UserView(LoginRequiredMixin, generic.DetailView):
 
 
 class PasswordChange(LoginRequiredMixin, SuccessMessageMixin, generic.FormView):
+    login_url = 'login'
     model = get_user_model()
     form_class = PasswordChangeForm
     success_url = reverse_lazy("home")

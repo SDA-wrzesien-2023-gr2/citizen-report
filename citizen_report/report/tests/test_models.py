@@ -1,9 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
-from ..constants import Category
 from ..models import Report
 from ..utils import assign_clerk
+from ..constants import Category
 
 User = get_user_model()
 
