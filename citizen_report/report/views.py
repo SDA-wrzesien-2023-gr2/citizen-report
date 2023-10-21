@@ -21,7 +21,7 @@ def home(request):
     reports = Report.objects.order_by('-created_at')
     news_list = NewsPost.objects.order_by('-created_at')
 
-    return render(request, 'home.html', {'reports': reports, 'news_list':news_list})
+    return render(request, 'home.html', {'reports': reports, 'news_list': news_list})
 
 
 class ReportListView(FilterView):
@@ -81,10 +81,10 @@ class ReportCreate(LoginRequiredMixin, generic.CreateView):
         if self.kwargs.get('clerk'):
             form.instance.clerk = self.kwargs.get('clerk')
         else:
-            available_clerks = User.objects.filter(department=form.instance.category).filter(is_staff=True).all()
-            form.instance.clerk = available_clerks.annotate(num_reports=Count("assigned_reports")).order_by("num_reports").first()
+            assign_clerk(form.instance)
         form.instance.user = self.request.user
         return super(ReportCreate, self).form_valid(form)
+
 
 # @login_required
 # def create(request):
@@ -108,10 +108,10 @@ class ReportCreate(LoginRequiredMixin, generic.CreateView):
 def detail(request, report_id):
     report = get_object_or_404(Report, id=report_id)
     posts = report.report_posts.all()
-    return render(request, 'detail.html', {'report': report,'posts': posts})
+    return render(request, 'detail.html', {'report': report, 'posts': posts})
 
 
-@login_required
+@login_required(login_url='login')
 def update_status(request, report_id):
     if request.user.is_staff:
         report = get_object_or_404(Report, id=report_id, clerk=request.user)
@@ -130,4 +130,3 @@ def update_status(request, report_id):
             return render(request, "405.html", status=405)
     else:
         return render(request, "403.html", status=403)
-
