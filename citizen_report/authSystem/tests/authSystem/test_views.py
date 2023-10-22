@@ -165,5 +165,4 @@ class ResetPasswordTest(TestCase):
     def test_reset_invalid_data(self):
         response = self.client.post(self.url,
                                     {'email': 'testgmail.com'})
-        self.assertFormError(response, 'form', 'email',
-                             'Enter a valid email address.')
+        self.assertFormError(response, 'form', 'email', 'Enter a valid email address.')

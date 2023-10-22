@@ -10,7 +10,7 @@ User = get_user_model()
 class FormUserTest(TestCase):
     def setUp(self):
         self.data_user = {'email': 'test@gmail.com', 'username': 'testUser', 'password1': 'testowehaslo432', 'password2': 'testowehaslo432'}
-        self.blank_data = {'email': 'test@gmail.com', 'username': ''}
+        self.blank_data = {}
         self.invalid_email_data = {'email': 'test', 'username': 'testUser', 'password1': 'testowehaslo432', 'password2': 'testowehaslo432'}
         self.invalid_password_data = {'email': 'test@gmail.com', 'username': 'testUser', 'password1': 'testowehaslo', 'password2': 'testowehaslo432'}
 
@@ -34,7 +34,7 @@ class FormUserTest(TestCase):
 class FormUpdateUserTest(TestCase):
     def setUp(self):
         self.data_user = {'email': 'test@gmail.com', 'username': 'testUser'}
-        self.blank_data = {'email': 'test@gmail.com', 'username': ''}
+        self.blank_data = {}
         self.invalid_data = {'email': 'test', 'username': 'test User'}
 
     def test_update_form_user(self):
