@@ -8,6 +8,8 @@ from ..models import Report
 from ..views import ReportCreate, update_status
 from news.models import NewsPost
 
+from authSystem.const import Department
+
 User = get_user_model()
 
 
@@ -16,12 +18,12 @@ class HomeTest(TestCase):
         self.user = User.objects.create_user(
             username='testUser', email='test@gmail.com', password='12345'
         )
-        self.clerk = User.objects.create_superuser(
-            username='testClerk', email='testClerk@gmail.com', password='12345'
+        self.clerk = User.objects.create_user(
+            username='testClerk', email='testClerk@gmail.com', password='12345', is_staff=True, department=Department.GAS
         )
         self.reports = [
             Report.objects.create(
-                title='Test Report 1', text='This is a test', category=Category.POWER_SUPPLY,
+                title='Test Report 1', text='This is a test', category=Category.GASWORKS,
                 user=self.user, clerk=self.clerk),
             Report.objects.create(
                 title='Test Report 2', text='This is a test', category=Category.GASWORKS,
@@ -61,8 +63,8 @@ class ReadReportTest(TestCase):
         self.user = User.objects.create_user(
             username='testUser', email='test@gmail.com', password='12345'
         )
-        self.clerk = User.objects.create_superuser(
-            username='testClerk', email='testClerk@gmail.com', password='12345'
+        self.clerk = User.objects.create_user(
+            username='testClerk', email='testClerk@gmail.com', password='12345', is_staff=True,
         )
         self.reports = [
             Report.objects.create(
@@ -120,18 +122,15 @@ class ReadMyReportTest(TestCase):
         self.user = User.objects.create_user(
             username='testUser', email='test@gmail.com', password='12345'
         )
-        self.clerk_pow = User.objects.create_superuser(
-            username='testClerk Power', email='testClerkPow@gmail.com', password='12345'
+        self.clerk_pow = User.objects.create_user(
+            username='testClerk Power', email='testClerkPow@gmail.com', password='12345', is_staff=True, department=Department.POW
         )
-        self.clerk_gas = User.objects.create_superuser(
-            username='testClerk Gasworks', email='testClerkGas@gmail.com', password='12345'
+        self.clerk_gas = User.objects.create_user(
+            username='testClerk Gasworks', email='testClerkGas@gmail.com', password='12345', is_staff=True, department=Department.GAS
         )
-        self.clerk_pub = User.objects.create_superuser(
-            username='testClerk Safety', email='testClerkPub@gmail.com', password='12345'
+        self.clerk_pub = User.objects.create_user(
+            username='testClerk Safety', email='testClerkPub@gmail.com', password='12345', is_staff=True, department=Department.SAF
         )
-        self.clerk_pow.department = Category.POWER_SUPPLY
-        self.clerk_gas.department = Category.GASWORKS
-        self.clerk_pub.department = Category.PUBLIC_SAFETY
         self.reports = [
             Report.objects.create(
                 title='Test Report 1', text='This is a test', category=Category.POWER_SUPPLY,
@@ -190,8 +189,8 @@ class ReadDetailReportTest(TestCase):
         self.user = User.objects.create_user(
             username='testUser', email='test@gmail.com', password='12345'
         )
-        self.clerk = User.objects.create_superuser(
-            username='testClerk', email='testClerk@gmail.com', password='12345'
+        self.clerk = User.objects.create_user(
+            username='testClerk', email='testClerk@gmail.com', password='12345', is_staff=True, department=Department.POW
         )
         self.report = Report.objects.create(
             title='Test Report 1', text='This is a text', category=Category.POWER_SUPPLY,
@@ -213,10 +212,9 @@ class CreateReportTest(TestCase):
         self.user = User.objects.create_user(
             username='testUser', email='test@gmail.com', password='12345'
         )
-        self.clerk = User.objects.create_superuser(
-            username='testClerk', email='testClerk@gmail.com', password='12345'
+        self.clerk = User.objects.create_user(
+            username='testClerk', email='testClerk@gmail.com', password='12345', is_staff=True, department=Department.POW
         )
-        self.clerk.department = Category.POWER_SUPPLY
         self.data = {'title': 'Hello world', 'text': 'Something intrest.', 'category': Category.POWER_SUPPLY}
         self.url = reverse('create')
 
@@ -252,8 +250,8 @@ class UpdateReportTest(TestCase):
         self.user = User.objects.create_user(
             username='testUser', email='test@gmail.com', password='12345'
         )
-        self.clerk = User.objects.create_superuser(
-            username='testClerk', email='testClerk@gmail.com', password='12345'
+        self.clerk = User.objects.create_user(
+            username='testClerk', email='testClerk@gmail.com', password='12345', is_staff=True, department=Department.POW
         )
         self.report = Report.objects.create(
             title='Test Report 1', text='This is a text', category=Category.POWER_SUPPLY,
