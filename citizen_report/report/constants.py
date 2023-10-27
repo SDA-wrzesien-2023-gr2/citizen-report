@@ -17,5 +17,5 @@ class Category(models.TextChoices):
 class Status(models.TextChoices):
     PENDING = 'PN', 'Pending'
     CHECKING = 'CH', 'Checking'
-    REJECTED = 'VD', 'Rejected'
+    REJECTED = 'RJ', 'Rejected'
     APPROVED = 'AP', 'Approved'

@@ -3,20 +3,66 @@
 {% block title %}Log In{% endblock %}
 
 {% block content %}
-<div class="container">
-  <h1>Log In</h1>
-  <form method="post">
-    {% csrf_token %}
-    <div class="form-group">
-      {{ form.as_p }}
-    </div>
-    <div class="form-group">
-      <button type="submit" class="btn btn-primary">Log In</button>
-    </div>
-    <div>
-      <a href="{% url 'reset_password' %}" class="btn btn-secondary"><i>Forgot Password?</i></a>
-    </div>
-  </form>
+
+{% if messages %}
+<div class="p-3 container-fluid ">
+  {% for message in messages %}
+  <div class="alert alert-success" role="alert">
+    {{message}}
+  </div>
+  {% endfor %}
 </div>
+{% endif %}
+
+<div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-content ">
+    <div class="modal-header d-flex justify-content-center">
+      <div class="form-title text-center">
+        <h2 class="fw-bold mb-4">Sign In</h2>
+        {% if form.errors %}
+          <div class="form-group mb-2">
+            {% for field in form %}
+              {% for error in field.errors %}
+                <div class="alert alert-danger" role="alert">
+                  <strong>{{ error|escape }}</strong>
+                </div>
+              {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+              <div class="alert alert-danger" role="alert">
+                <strong>{{ error|escape }}</strong>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <p class="text-muted mb-2">Please enter your username and password!</p>
+        {% endif %}
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="d-flex flex-column text-center">
+        <form method="post">
+          <div class="form-group">
+            <input type="text" class="form-control form-control-lg " id="username" placeholder="Username..." name="username" >
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control form-control-lg " id="password" placeholder="Password..." name="password">
+          </div>
+          <div class="form-group">
+            <div class="text-right">
+              <a class="text-info" href="{% url 'reset_password' %}">Forgot your password?</a>
+            </div>
+          </div>
+          {% csrf_token %}
+          <button type="submit" class="btn btn-info btn-block btn-round">Login</button>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer d-flex justify-content-center">
+      <div class="form-group">Not a member yet? <a href="{% url 'signup' %}" class="text-info"> Sign Up</a></div>
+    </div>
+  </div>
+</div>
+
 
 {% endblock %}

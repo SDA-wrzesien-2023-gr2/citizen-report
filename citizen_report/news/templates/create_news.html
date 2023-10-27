@@ -1,15 +1,56 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Create post{% endblock %}
+{% block title %}Create news{% endblock %}
 
 {% block content %}
-<h2>Create post</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Create post</button>
-</form>
-<p>
-    <a href="{{request.META.HTTP_REFERER|escape}}">Back</a>
-</p>
+
+<div class="container p-3">
+    <div class="p-4 mb-2 bg-white text-dark rounded border border-dark" style="height: 760px">
+        <h1 class="text-center">
+            <p class="text-uppercase font-weight-bold font-italic">new post</p>
+        </h1>
+        <div class="media">
+            <div class="col-md-2 mx-auto">
+                <img src="{% static 'news/news-problem-icon3.jpg' %}" class="img-fluid">
+            </div>
+        </div>
+        <form method="post">
+            <div class="form-group row m-2">
+                <label for="inputTitle" class="col-sm-2 col-form-label">Title</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputTitle" placeholder="Title" name="title" required>
+                </div>
+            </div>
+            <div class="form-group m-4">
+                <label for="textarea">Text</label>
+                <textarea class="form-control" id="textarea" rows="8" name="text" placeholder="Describe evaluation to your report" required></textarea>
+            </div>
+            <div class="form-group m-4">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="validatedCustomFile" name="image">
+                    <label class="custom-file-label" for="validatedCustomFile">Attach file...</label>
+                </div>
+            </div>
+            {% csrf_token %}
+            <div class="form-group row m-2">
+                <div class="col-sm-12 text-right">
+                    <button type="submit" class="btn btn-success">Send post</button>
+                </div>
+            </div>
+            <div class="container">
+                <div class="col-md-2 mx-auto">
+                    <img src="{% static 'news/news-problem-icon3.jpg' %}" class="img-fluid">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="fixed-bottom d-flex p-3">
+    <div class="form-group">
+        <a href="{{request.META.HTTP_REFERER|escape}}" class="btn btn-secondary">Back</a>
+    </div>
+</div>
+
 {% endblock %}

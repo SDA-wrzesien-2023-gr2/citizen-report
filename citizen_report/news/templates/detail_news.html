@@ -2,48 +2,99 @@
 
 
 {%block title%}
-{{post.title}}
+{{newspost.title}}
 {% endblock title%}
 
 {% block content %}
 
-
-<h1>{{newspost.title}}</h1>
-<p>{{ newspost.clerk }} | {{ newspost.created_at}} </p>
-{% if newspost.image %}
-<img src="{{news.image.url}}" alt="Post image" default >
+{% if messages %}
+<div class="p-3 container-fluid ">
+    {% for message in messages %}
+    <div class="alert alert-info" role="alert">
+        {{message}}
+    </div>
+    {% endfor %}
+</div>
 {% endif %}
-<p>{{newspost.text|safe  }}</p>
 
-<hr>
-{% if user.is_authenticated %}
-<p>
-    <a href="{% url 'add_comment_to_news' newspost.id %}">Add comment</a>
-</p>
-{% else %}
-<p><a href="{% url 'login' %}">Log in</a> to comment</p>
-{% endif %}
+<div class="container-fluid">
+    <div class="p-3 my-3 mb-2 bg-white text-dark rounded border border-dark">
+        <div class="row m-4">
+            <h1 class="display-4 text-uppercase font-weight-bold">{{newspost.title}}</h1>
+        </div>
+        <div class="row m-4">
+            <div class="col-sm-6">
+                <p class="text-start"> {{newspost.clerk.username}} | {{newspost.created_at}}</p>
+            </div>
+        </div>
+        <div class="row m-4">
+            <div class="col-sm-6 mx-auto">
+                {% if newspost.image %}
+                    <img src="{{newspost.image.url}}" class="rounded mx-auto d-block"  alt="Report image">
+                {% endif %}
+            </div>
+        </div>
+        <div class="row m-4">
+            <div class="col-md-10 mx-auto">
+                <p class="font-italic">{{newspost.text|safe  }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <hr class="my-2">
+        </div>
+        <div class="row m-2">
+            {% if user.is_authenticated %}
+                <div class="col-md-12 d-flex justify-content-end">
+                    <a class="btn btn-primary btn-lg" href="{% url 'add_comment_to_news' newspost.id %}" role="button">Add comment</a>
+                </div>
+            {% else %}
+                <div class="col-md-12 d-flex justify-content-end">
+                    <div class="form-group">
+                    <a class="text-info" href="{% url 'login' %}">Log in</a> to comment
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<hr class="my-3">
 
 {% for comment in newspost.comments.all %}
     {% if comment.approved_comment %}
-        <div>
-            <div>{{ comment.created_at }}</div>
-            <strong>{{ comment.user.username }}</strong>
-            <p>{{ comment.text|linebreaks }}</p>
+        <div class="container">
+            <div class="p-3 my-3 mb-2 bg-light text-dark rounded border">
+                <div class="row">
+                    <div class="col-md-8">
+                        <p class="text-start font-weight-bold m-0">{{ comment.user.username }}</p>
+                        <p class="text-start m-0"> <small class="text-muted"> {{ comment.created_at }} </small></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 mx-auto">
+                        <p class="font-italic">{{ comment.text|linebreaks }}</p>
+                    </div>
+                </div>
+            </div>
         </div>
     {% endif %}
 {% empty %}
-<div>
-    <div>
-        <h3>No comments here yet</h3>
-    </div>
-    <div>Be the first to comment
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h3 class="text-start font-weight-bold m-1">No comments here yet</h3>
+            <p class="text-start m-1"> Be the first to comment </p>
+        </div>
     </div>
 </div>
 {% endfor %}
 
-<p>
-    <a href="{{request.META.HTTP_REFERER|escape}}">Back</a>
-</p>
+<div class=" fixed-bottom p-3">
+    <div class="row">
+        <div class="col-sm-1">
+            <a href="{{request.META.HTTP_REFERER|escape}}" class="btn btn-secondary">Back</a>
+        </div>
+    </div>
+</div>
 
 {% endblock content %}

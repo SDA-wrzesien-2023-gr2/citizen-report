@@ -1,15 +1,35 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Add comment{% endblock %}
+
 
 {% block content %}
-<h1>New comment</h1>
-<form method="POST" >
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Send</button>
-</form>
 
-<p>
-    <a href="{{request.META.HTTP_REFERER|escape}}">Back</a>
-</p>
+<div class="p-3 mb-4 container">
+    <div class="p-3 mb-4 bg-white text-dark rounded border border-dark col-sm-8 mx-auto">
+        <h3 class="text-center">
+            <p class="text-uppercase font-weight-bold font-italic">New comment</p>
+        </h3>
+        <form method="post">
+            <div class="form-group ">
+                <textarea class="form-control" id="textarea" rows="6" name="text" placeholder="Write your comment" required></textarea>
+            </div>
+            {% csrf_token %}
+            <div class="form-group row">
+                <div class="col-sm-12 text-right">
+                    <button type="submit" class="btn btn-primary">Send comment</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="fixed-bottom d-flex p-3">
+    <div class="form-group">
+        <a href="{{request.META.HTTP_REFERER|escape}}" class="btn btn-secondary">Back</a>
+    </div>
+</div>
+
 
 {% endblock %}
