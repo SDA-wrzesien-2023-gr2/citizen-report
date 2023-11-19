@@ -16,6 +16,10 @@ class NotificationDetailView(LoginRequiredMixin, DetailView):
 
 class NotificationListView(LoginRequiredMixin, ListView):
     model = Notification
-    paginate_by = 6
+    paginate_by = 5
     template_name = 'my_notifications.html'
+
+    def get_queryset(self, **kwargs):
+        queryset = super().get_queryset(**kwargs)
+        return queryset.filter(user=self.request.user)
 
