@@ -6,7 +6,7 @@
 
 <div class="container p-2">
     {% for post in newspost_list %}
-        <div class="jumbotron">
+        <div class="jumbotron my-4 p-4">
             <h1 class="display-5">{{post.title}}</h1>
             <p class="font-italic"><small class="text-muted">{{post.created_at}}</small></p>
             <p class="lead">{{post.text|slice:":100" }}</p>
