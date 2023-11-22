@@ -9,68 +9,70 @@
 {% block content %}
 
 <div class="container-fluid">
-    <div class="p-3 my-3 mb-2 bg-white text-dark rounded border border-dark" style="height: 760px">
-        <div class="row m-2">
-            <h1 class="display-3 text-uppercase font-weight-bold">{{report.get_status_display}}</h1>
-        </div>
-        <div class="media">
-            <div class="col-md-3 mx-auto">
-                <div class="row mx-auto">
-                    <div class="col-sm-4">
-                        <img src="{% static 'report/report-problem-icon3.jpg' %}" class="img-fluid">
-                    </div>
-                    <div class="col-sm-4">
-                        <img src="{% static 'report/report-problem-icon3.jpg' %}" class="img-fluid">
-                    </div>
-                    <div class="col-sm-4">
-                        <img src="{% static 'report/report-problem-icon3.jpg' %}" class="img-fluid">
+    <div class="col-10 mx-auto">
+        <div class="p-3 m-3 mb-2 bg-white text-dark rounded border border-dark">
+            <div class="row m-2">
+                <h1 class="display-3 text-uppercase font-weight-bold">{{report.get_status_display}}</h1>
+            </div>
+            <div class="media">
+                <div class="col-md-3 mx-auto">
+                    <div class="row mx-auto">
+                        <div class="col-sm-4">
+                            <img src="{% static 'report/report-problem-icon3.jpg' %}" class="img-fluid">
+                        </div>
+                        <div class="col-sm-4">
+                            <img src="{% static 'report/report-problem-icon3.jpg' %}" class="img-fluid">
+                        </div>
+                        <div class="col-sm-4">
+                            <img src="{% static 'report/report-problem-icon3.jpg' %}" class="img-fluid">
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row m-4">
-            <div class="col-sm-6">
-                <h1 class="text-start">
-                    <p class="text-uppercase font-weight-bold font-italic">{{report.title}}</p>
-                </h1>
-                <h3 class="text-start">
-                    <p class="font-weight-bold font-italic">Category - {{report.get_category_display}}</p>
-                </h3>
-                <p class="text-start">Submitted by: {{report.user.username}}</p>
-                <p class="text-start"><small class="text-muted">Update date: {{report.updated_at}} | Submission date: {{report.created_at}}</small></p>
+            <div class="row m-4">
+                <div class="col-sm-6">
+                    <h1 class="text-start">
+                        <p class="text-uppercase font-weight-bold font-italic">{{report.title}}</p>
+                    </h1>
+                    <h3 class="text-start">
+                        <p class="font-weight-bold font-italic">Category - {{report.get_category_display}}</p>
+                    </h3>
+                    <p class="text-start">Submitted by: {{report.user.username}}</p>
+                    <p class="text-start"><small class="text-muted">Update date: {{report.updated_at}} | Submission date: {{report.created_at}}</small></p>
+                    <hr class="my-2">
+                </div>
+                <div class="col-sm-6">
+                    {% if report.image %}}
+                    <img src="{{report.image.url}}" class="rounded mx-auto d-block"  alt="Report image">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row m-4">
+                <div class="col-md-10 mx-auto">
+                    <p class="font-italic">{{report.text}}</p>
+                </div>
+            </div>
+            <div class="row">
                 <hr class="my-2">
             </div>
-            <div class="col-sm-6">
-                {% if report.image %}}
-                <img src="{{report.image.url}}" class="rounded mx-auto d-block"  alt="Report image">
-                {% endif %}
+            <div class="row m-4">
+                <div class="col-md-12 d-flex justify-content-end">
+                    <p class="card-text">Responsible Person: {{report.clerk.username}}</p>
+                </div>
             </div>
-        </div>
-        <div class="row m-4">
-            <div class="col-md-10 mx-auto">
-                <p class="font-italic">{{report.text}}</p>
-            </div>
-        </div>
-        <div class="row">
-            <hr class="my-2">
-        </div>
-        <div class="row m-4">
-            <div class="col-md-12 d-flex justify-content-end">
-                <p class="card-text">Responsible Person: {{report.clerk.username}}</p>
-            </div>
-        </div>
 
-        <div class="media">
-            <div class="col-md-3 mx-auto">
-                <div class="row mx-auto">
-                    <div class="col-sm-4">
-                        <img src="{% static 'report/report-problem-icon3.jpg' %}" class="img-fluid">
-                    </div>
-                    <div class="col-sm-4">
-                        <img src="{% static 'report/report-problem-icon3.jpg' %}" class="img-fluid">
-                    </div>
-                    <div class="col-sm-4">
-                        <img src="{% static 'report/report-problem-icon3.jpg' %}" class="img-fluid">
+            <div class="media">
+                <div class="col-md-3 mx-auto">
+                    <div class="row mx-auto">
+                        <div class="col-sm-4">
+                            <img src="{% static 'report/report-problem-icon3.jpg' %}" class="img-fluid">
+                        </div>
+                        <div class="col-sm-4">
+                            <img src="{% static 'report/report-problem-icon3.jpg' %}" class="img-fluid">
+                        </div>
+                        <div class="col-sm-4">
+                            <img src="{% static 'report/report-problem-icon3.jpg' %}" class="img-fluid">
+                        </div>
                     </div>
                 </div>
             </div>
