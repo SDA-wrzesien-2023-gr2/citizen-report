@@ -36,7 +36,7 @@
 
 When project will be up, go to: http://localhost:8000/ Then you should see:
 
-![img.png](img/img.png)
+![img.png](img/home.png)
 
 On the home page you can see the latest report and news in the power failure category. At right corner you will see user management panel. On the left you will be able to find navigation of site.
 
@@ -68,10 +68,32 @@ From here you have few option:
 
 
 To create a report:
-![img.png](img/img2.png)
+![img.png](img/create.png)
             
 Features:
    * `Category` - choose the category of the report
    * `Subject` `Descrition` - fill in with appropriate data
    * `Attach file...` you can attach some image to your report
    * `Send report` Sends POST request to http://localhost:8000/reports/
+        
+After sending POST request report gets assigned to clerk depending on selected category and 
+workload on employees in their Department. Responsible person on the application will see it by 
+clicking on `My reports`. 
+
+![img.png](img/my_report.png)
+
+Features:
+   * `Filter` - optional, you can filter reports by status
+   * `Update status` Sends GET request for http://localhost:8000/update-report/<int:report_id>/
+   * `Preview` `1 2 3` `Next` - navigation between pages, it is paginated by 2 reports
+
+After redirecting to appropriate site. Clerk can accept or reject the reports and make news.
+
+To view all reports you visit http://localhost:8000/reports/ by clicking `Reports`
+![img.png](img/reports.png)
+
+Features:
+   * `Filter`(`Category` `Status`) - optional, you can filter reports by status and category
+   * `Search` optional, you can search a report by filled text
+   * `Preview` `1 2 3...` `Next` - navigation between pages, it is paginated by 4 reports
+   * `Check report` Sends GET request for http://localhost:8000/reports/<int:report_id>/
